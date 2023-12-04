@@ -1,17 +1,15 @@
-import { render } from "@testing-library/react";
+// books.js
+import React from "react";
 import BooksItem from "./bookItem";
 
-function Books(props)
-{
-    // Creates map out of myBooks
-    return props.myBooks.map
-    (
-        (book)=>
-        {
-            return <BooksItem myBook={book} key={book.isbn}></BooksItem> // Passes the current book to BooksItem and sets the isbn as the key
-        }
-    );
+function Books(props) {
+  return (
+    <div>
+      {props.myData.map((post, index) => (
+        <BooksItem key={index} myData={post}></BooksItem>
+      ))}
+    </div>
+  );
 }
 
 export default Books;
-    
