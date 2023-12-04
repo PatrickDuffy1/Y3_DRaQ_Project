@@ -27,6 +27,8 @@ const data = [
             "image": "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/banker2.jpg",
             "content": "This is the content of the post",
             "owner": "RandomUser1",
+			"likes": ["User1", "User2"],
+			"dislikes": ["User3"],
             "comments":[
             {
                 "title": "Learn Git in a Month of Lunches",
@@ -71,6 +73,8 @@ const data = [
             "image": "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/umali.jpg",
             "content": "This is the content of the second post",
             "owner": "RandomUser2",
+			"likes": [],
+			"dislikes": ["User1", "User2"],
             "comments":[
             {
                 "title": "Learn Git in a Month of Lunches",
