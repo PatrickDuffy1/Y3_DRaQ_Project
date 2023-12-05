@@ -6,7 +6,7 @@ function Books(props) {
   return (
     <div>
       {props.myData.map((post, index) => (
-        <BooksItem key={index} myData={post}></BooksItem>
+        <BooksItem key={post.id} myData={post}></BooksItem>
       ))}
     </div>
   );

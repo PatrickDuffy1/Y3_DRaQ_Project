@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 const data = [
     {
         "posts":[{
-            
+            "_id": "0",
             "title": "Test title",
             "image": "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/banker2.jpg",
             "content": "This is the content of the post",
@@ -68,7 +68,7 @@ const data = [
             }]
         },
 		{
-            
+            "_id": "1",
             "title": "Test title 2",
             "image": "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/umali.jpg",
             "content": "This is the content of the second post",
@@ -123,6 +123,13 @@ const data = [
 app.get('/', (req, res) => {
     res.send(data)
 })
+
+// Route point that sends the individual post when passed /comments/:id
+app.get('/comments/:id', (req, res) => {
+    
+    res.send(data[0].posts[req.params.id]);
+});
+
 
 // Route point that sends the new book when passed /api/book
 app.post('/api/book', (req, res) => {

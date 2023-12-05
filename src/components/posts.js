@@ -3,7 +3,7 @@ import Books from "./books";
 import axios from "axios";
 import { Post } from "../classes/post";
 
-function Read() {
+function Posts() {
   // Set book data and post objects as state variables
   const [data, setData] = useState([]);
   const [posts, setPosts] = useState([]);
@@ -14,7 +14,7 @@ useEffect(() => {
     .then((response) => {
       setData(response.data.myData[0].posts); // Access 'posts' property
       const postObjects = response.data.myData[0].posts.map(post => new Post(
-        post.id,
+        post._id,
         post.title,
         post.image,
         post.content,
@@ -23,7 +23,6 @@ useEffect(() => {
         post.dislikes,
         post.comments
     ));
-    
 
       setPosts(postObjects);
     })
@@ -35,7 +34,7 @@ useEffect(() => {
 for(let i = 0; i < posts.length; i++) 
 {
   console.log("Posts: ", posts[i]);
-  console.log("Post title: ", posts[i].getTitle());
+  //console.log("Post title: ", posts[i].getTitle());
 }
 
 return (
@@ -46,4 +45,4 @@ return (
 );
 }
 
-export default Read;
+export default Posts;

@@ -1,8 +1,9 @@
 export class Post
 {
 
-    constructor(title, image, content, owner, likes, dislikes, comments)
+    constructor(id, title, image, content, owner, likes, dislikes, comments)
     {
+        this.id = id;
         this.title = title;
         this.image = image;
         this.content = content;
@@ -10,6 +11,11 @@ export class Post
         this.likes = likes;
         this.dislikes = dislikes;
         this.comments = comments;
+    }
+
+    getId()
+    {
+        return this.id;
     }
 
     getTitle()
