@@ -7,7 +7,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Read from './components/read';
 import Create from './components/create';
 import Posts from './components/posts';
-import Comments from './components/comments';
+import ReadComments from './components/readComments';
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
           {/* Routes to Create page */}
           <Route path='/create' element={<Create></Create>}></Route>
 
-          <Route path='/comments/:id' element={<Comments></Comments>}></Route>
+          <Route path='/comments/:id' element={<ReadComments></ReadComments>}></Route>
         </Routes>
       </div>
     </BrowserRouter>

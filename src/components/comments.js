@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
-import Books from "./books";
-import axios from "axios";
+// books.js
+import React from "react";
+import CommentItem from "./commentItem";
 
-function Comments() 
+function Comments(props)
 {
-    return(
-        <div>
-           <h1>Hello World</h1>
-           <h2>It is {new Date().toLocaleTimeString()}.</h2> {/*Gets and displays current time */}
-        </div>
+    // Creates map out of myBooks
+    return props.myData.comments.map
+    (
+        (comment)=>
+        {
+            return <CommentItem myData={comment} key={comment._id}></CommentItem> // Passes the current book to BooksItem and sets the isbn as the key
+        }
     );
 }
 

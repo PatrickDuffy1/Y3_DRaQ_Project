@@ -31,40 +31,25 @@ const data = [
 			"dislikes": ["User3"],
             "comments":[
             {
-                "title": "Learn Git in a Month of Lunches",
-                "isbn": "1617292419",
-                "pageCount": 0,
-                "thumbnailUrl":
-                    "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/umali.jpg",
-                "status": "MEAP",
-                "authors": ["Rick Umali"],
-                "categories": []
+                "_id": "0",
+                "content": "This is comment 0 of post 0",
+				"owner": "RandomUser1",
+				"likes": ["User1", "User2"],
+				"dislikes": ["User3"]
             },
             {
-                "title": "MongoDB in Action, Second Edition",
-                "isbn": "1617291609",
-                "pageCount": 0,
-                "thumbnailUrl":
-                    "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/banker2.jpg",
-                "status": "MEAP",
-                "authors": [
-                    "Kyle Banker",
-                    "Peter Bakkum",
-                    "Tim Hawkins",
-                    "Shaun Verch",
-                    "Douglas Garrett"
-                ],
-                "categories": []
+                "_id": "1",
+                "content": "This is comment 1 of post 0",
+				"owner": "RandomUser7",
+				"likes": ["User1", "User2"],
+				"dislikes": ["User3"]
             },
             {
-                "title": "Getting MEAN with Mongo, Express, Angular, and Node",
-                "isbn": "1617292036",
-                "pageCount": 0,
-                "thumbnailUrl":
-                    "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/sholmes.jpg",
-                "status": "MEAP",
-                "authors": ["Simon Holmes"],
-                "categories": []
+                "_id": "2",
+                "content": "This is comment 2 of post 0",
+				"owner": "RandomUser6",
+				"likes": ["User1", "User2"],
+				"dislikes": ["User3"]
             }]
         },
 		{
@@ -77,40 +62,25 @@ const data = [
 			"dislikes": ["User1", "User2"],
             "comments":[
             {
-                "title": "Learn Git in a Month of Lunches",
-                "isbn": "1617292419",
-                "pageCount": 0,
-                "thumbnailUrl":
-                    "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/umali.jpg",
-                "status": "MEAP",
-                "authors": ["Rick Umali"],
-                "categories": []
+                "_id": "0",
+                "content": "This is comment 0 of post 1",
+				"owner": "RandomUser2",
+				"likes": ["User1", "User2"],
+				"dislikes": ["User3"]
             },
             {
-                "title": "MongoDB in Action, Second Edition",
-                "isbn": "1617291609",
-                "pageCount": 0,
-                "thumbnailUrl":
-                    "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/banker2.jpg",
-                "status": "MEAP",
-                "authors": [
-                    "Kyle Banker",
-                    "Peter Bakkum",
-                    "Tim Hawkins",
-                    "Shaun Verch",
-                    "Douglas Garrett"
-                ],
-                "categories": []
+                "_id": "1",
+                "content": "This is comment 1 of post 1",
+				"owner": "RandomUser1",
+				"likes": ["User1", "User2"],
+				"dislikes": ["User3"]
             },
             {
-                "title": "Getting MEAN with Mongo, Express, Angular, and Node",
-                "isbn": "1617292036",
-                "pageCount": 0,
-                "thumbnailUrl":
-                    "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/sholmes.jpg",
-                "status": "MEAP",
-                "authors": ["Simon Holmes"],
-                "categories": []
+                "_id": "2",
+                "content": "This is comment 2 of post 1",
+				"owner": "RandomUser5",
+				"likes": ["User1", "User2"],
+				"dislikes": ["User3"]
             }]
         }
 		]
