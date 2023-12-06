@@ -6,41 +6,35 @@ import { Post } from "../classes/post";
 function Posts() {
   // Set book data and post objects as state variables
   const [data, setData] = useState([]);
-  const [posts, setPosts] = useState([]);
 
   // React hook
-useEffect(() => {
-  axios.get('http://localhost:4000/api/books')
-    .then((response) => {
-      setData(response.data.myData[0].posts); // Access 'posts' property
-      const postObjects = response.data.myData[0].posts.map(post => new Post(
-        post._id,
-        post.title,
-        post.image,
-        post.content,
-        post.owner,
-        post.likes,
-        post.dislikes,
-        post.comments
-    ));
+  useEffect(
+    ()=>{
 
-      setPosts(postObjects);
-    })
-    .catch((error) => {
-      console.error("Error fetching data:", error);
-    });
-}, []);
+        
+        // Asynchronously make http request to localhost:4000 (which has the book JSON) to get book data
+        axios.get('http://localhost:4000')
+        .then( // Callback function
+            (response)=>{
+                setData(response.data[0].posts) // Store books data if api call was succsessful
+            }
+        )
+        .catch( // Callback function
+            (error)=>{
+                console.log(error); // Display error message to console if api call was unsuccsessful
+            }
+        );
 
-for(let i = 0; i < posts.length; i++) 
-{
-  console.log("Posts: ", posts[i]);
-  //console.log("Post title: ", posts[i].getTitle());
-}
+    },[]
+)
 
-return (
+console.log(data);
+
+
+return(
   <div>
-    {/* Display the Books component and passing the posts variable to it*/}
-    <Books myData={posts}></Books>
+      {/* Display the Books component and passing the data variable to it*/}
+      <Books myData={data}></Books>
   </div>
 );
 }

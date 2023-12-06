@@ -13,7 +13,7 @@ function BooksItem(props) {
     <div>
       <center>
         {/* Display Post as card */}
-        <Link to={'/comments/' + props.myData.id} className='btn'>
+        <Link to={'/comments/' + props.myData._id} className='btn'>
           <Card style={{ width: '18rem' }}>
             <Card.Img variant="top" src={props.myData.image} alt={props.myData.title} /> {/* Display post image */}
             <Card.Body>
