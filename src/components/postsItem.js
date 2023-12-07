@@ -2,11 +2,15 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 function PostsItem(props) {
-  //const { title, image, owner } = props.myData;
+  const likes = props.myData.likes;
+  const dislikes = props.myData.dislikes;
 
-  //console.log(props.myData);
+  const likeCount = likes.length;
+  const dislikeCount = dislikes.length;
+  const finalLikeCount = likeCount - dislikeCount;
 
 
   return (
@@ -23,6 +27,9 @@ function PostsItem(props) {
             <Card.Body>
               <Card.Title>{props.myData.title}</Card.Title> {/* Display post title */}
               <Card.Text>Username: {props.myData.owner}</Card.Text> {/* Display post owner */}
+              <Button variant='secondary'>Like</Button>
+              <b style={{ paddingLeft: 10, paddingRight: 10 }}>{finalLikeCount}</b>
+              <Button variant='secondary'>Dislike</Button>
             </Card.Body>
             {/* When clicked changes url to the url of the book */}
           </Card>

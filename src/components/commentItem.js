@@ -1,12 +1,16 @@
 
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 function CommentItem(props) {
-  //const { title, image, owner } = props.myData;
 
-  //console.log(props.myData);
+  const likes = props.myData.likes;
+  const dislikes = props.myData.dislikes;
+
+  const likeCount = likes.length;
+  const dislikeCount = dislikes.length;
+  const finalLikeCount = likeCount - dislikeCount;
 
 
   return (
@@ -19,13 +23,18 @@ function CommentItem(props) {
             <br></br>
             {
               props.myData.edited === true ? (
-                <b>This comment has been edited</b>
+                <b>This comment has been edited<br></br></b>
               ) : null
             }
 
           </Card.Text>
 
-          {props.myData.content}
+          <Card.Text>{props.myData.content}</Card.Text>
+
+          <Button variant='secondary'>Like</Button>
+          <b style={{ paddingLeft: 10, paddingRight: 10 }}>{finalLikeCount}</b>
+          <Button variant='secondary'>Dislike</Button>
+
         </Card.Body>
       </Card>
     </div>
