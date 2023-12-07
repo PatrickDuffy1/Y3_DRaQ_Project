@@ -29,11 +29,13 @@ const data = [
             "owner": "RandomUser1",
 			"likes": ["User1", "User2"],
 			"dislikes": ["User3"],
+            "edited": false,
             "comments":[
             {
                 "_id": "0",
                 "content": "Though the English Wikipedia reached three million articles in August 2009, the growth of the edition, in terms of the numbers of new articles and of editors, appears to have peaked around early 2007.[42] Around 1,800 articles were added daily to the encyclopedia in 2006; by 2013 that average was roughly 800.[43] A team at the Palo Alto Research Center attributed this slowing of growth to the project's increasing exclusivity and resistance to change.[44] Others suggest that the growth is flattening naturally because articles that could be called \"low-hanging fruit\"—topics that clearly merit an article—have already been created and built up extensively",
 				"owner": "RandomUser1",
+                "edited": false,
 				"likes": ["User1", "User2"],
 				"dislikes": ["User3"]
             },
@@ -41,6 +43,7 @@ const data = [
                 "_id": "1",
                 "content": "The domains wikipedia.com (later redirecting to wikipedia.org) and wikipedia.org were registered on January 12, 2001,[27] and January 13, 2001,[28] respectively. Wikipedia was launched on January 15, 2001[20] as a single English-language edition at www.wikipedia.com,[29] and was announced by Sanger on the Nupedia mailing list.[23] The name originated from a blend of the words wiki and encyclopedia.[30][31] Its integral policy of \"neutral point-of-view\"[32] was codified in its first few months. Otherwise, there were initially relatively few rules, and it operated independently of Nupedia.[23] Bomis originally intended it as a business for profit",
 				"owner": "RandomUser7",
+                "edited": true,
 				"likes": ["User1", "User2"],
 				"dislikes": ["User3"]
             },
@@ -48,6 +51,7 @@ const data = [
                 "_id": "2",
                 "content": "In January 2007, Wikipedia first became one of the ten most popular websites in the United States, according to Comscore Networks.",
 				"owner": "RandomUser6",
+                "edited": false,
 				"likes": ["User1", "User2"],
 				"dislikes": ["User3"]
             }]
@@ -60,11 +64,13 @@ const data = [
             "owner": "RandomUser2",
 			"likes": [],
 			"dislikes": ["User1", "User2"],
+            "edited": true,
             "comments":[
             {
                 "_id": "0",
                 "content": "The Romans referred to Ireland by this name too in its Latinised form, Hibernia, or Scotia.[44][45] Ptolemy records sixteen nations inhabiting every part of Ireland in 100 AD.[46] The relationship between the Roman Empire and the kingdoms of ancient Ireland is unclear. However, a number of finds of Roman coins have been made, for example at the Iron Age settlement of Freestone Hill near Gowran and Newgrange.",
 				"owner": "RandomUser2",
+                "edited": false,
 				"likes": ["User1", "User2"],
 				"dislikes": ["User3"]
             },
@@ -72,6 +78,7 @@ const data = [
                 "_id": "1",
                 "content": "All of the Irish kingdoms had their own kings but were nominally subject to the high king. The high king was drawn from the ranks of the provincial kings and ruled also the royal kingdom of Meath, with a ceremonial capital at the Hill of Tara.",
 				"owner": "RandomUser1",
+                "edited": true,
 				"likes": ["User1", "User2"],
 				"dislikes": ["User3"]
             },
@@ -79,6 +86,7 @@ const data = [
                 "_id": "2",
                 "content": "The Chronicle of Ireland records that in 431, Bishop Palladius arrived in Ireland on a mission from Pope Celestine I to minister to the Irish \"already believing in Christ\".[51] The same chronicle records that Saint Patrick, Ireland's best known patron saint, arrived the following year. There is continued debate over the missions of Palladius and Patrick, but the consensus is that they both took place[52] and that the older druid tradition collapsed in the face of the new religion.[53] Irish Christian scholars excelled in the study of Latin and Greek learning and Christian theology. In the monastic culture that followed the Christianisation of Ireland, Latin and Greek learning was preserved in Ireland during the Early Middle Ages in contrast to elsewhere in Western Europe, where the Dark Ages followed the Fall of the Western Roman Empire.",
 				"owner": "RandomUser5",
+                "edited": true,
 				"likes": ["User1", "User2"],
 				"dislikes": ["User3"]
             },
@@ -86,6 +94,7 @@ const data = [
                 "_id": "3",
                 "content": "From the 9th century, waves of Viking raiders plundered Irish monasteries and towns.",
 				"owner": "RandomUser23",
+                "edited": false,
 				"likes": ["User1", "User2"],
 				"dislikes": ["User3"]
             }]

@@ -11,13 +11,23 @@ function CommentItem(props) {
 
   return (
     <div>
-          <Card style={{ width: '100%', textAlign: 'left' }}>
-            <Card.Body>
-              <Card.Title>{props.myData.title}</Card.Title> {/* Display post title */}
-              <Card.Text><b>Username: {props.myData.owner}</b></Card.Text> {/* Display post owner */}
-              {props.myData.content}
-            </Card.Body>
-          </Card>
+      <Card style={{ width: '100%', textAlign: 'left' }}>
+        <Card.Body>
+          <Card.Title>{props.myData.title}</Card.Title> {/* Display post title */}
+          <Card.Text>
+            <b>Username: {props.myData.owner}</b> {/* Display post owner */}
+            <br></br>
+            {
+              props.myData.edited === true ? (
+                <b>This comment has been edited</b>
+              ) : null
+            }
+
+          </Card.Text>
+
+          {props.myData.content}
+        </Card.Body>
+      </Card>
     </div>
   );
 }
