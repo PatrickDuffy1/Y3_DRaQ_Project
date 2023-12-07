@@ -1,12 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Content from './components/content';
 import Navbar1 from './components/navbar';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import Read from './components/read';
-import Create from './components/create';
-import Posts from './components/posts';
+import ReadPosts from './components/readPosts';
 import ReadComments from './components/readComments';
 
 function App() {
@@ -19,13 +16,7 @@ function App() {
         {/* Routes to selected page */}
         <Routes>
           {/* Routes to Home page */}
-          <Route path='/' element={<Posts></Posts>}></Route>
-
-          {/* Routes to Read page */}
-          <Route path='/read' element={<Read></Read>}></Route>
-
-          {/* Routes to Create page */}
-          <Route path='/create' element={<Create></Create>}></Route>
+          <Route path='/' element={<ReadPosts></ReadPosts>}></Route>
 
           <Route path='/comments/:id' element={<ReadComments></ReadComments>}></Route>
         </Routes>

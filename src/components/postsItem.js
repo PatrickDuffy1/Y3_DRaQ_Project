@@ -1,9 +1,9 @@
-// bookItem.js
+
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 
-function BooksItem(props) {
+function PostsItem(props) {
   //const { title, image, owner } = props.myData;
 
   //console.log(props.myData);
@@ -32,4 +32,4 @@ function BooksItem(props) {
   );
 }
 
-export default BooksItem;
+export default PostsItem;
