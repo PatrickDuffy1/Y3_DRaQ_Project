@@ -13,12 +13,16 @@ function BooksItem(props) {
     <div>
       <center>
         {/* Display Post as card */}
-        <Link to={'/comments/' + props.myData._id} className='btn'>
-          <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src={props.myData.image} alt={props.myData.title} /> {/* Display post image */}
+        <Link to={'/comments/' + props.myData._id} className='btn' style={{ width: '100%' }}>
+          <Card>
+
+            <center>
+              <Card.Img variant="top" src={props.myData.image} alt={props.myData.title} style={{ width: '18rem' }} /> {/* Display post image */}
+            </center>
+            
             <Card.Body>
               <Card.Title>{props.myData.title}</Card.Title> {/* Display post title */}
-              <Card.Text>Poster: {props.myData.owner}</Card.Text> {/* Display post owner */}
+              <Card.Text>Username: {props.myData.owner}</Card.Text> {/* Display post owner */}
             </Card.Body>
             {/* When clicked changes url to the url of the book */}
           </Card>

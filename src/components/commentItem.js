@@ -11,19 +11,13 @@ function CommentItem(props) {
 
   return (
     <div>
-      <center>
-        {/* Display Post as card */}
-        <Link to={'/comments/' + props.myData._id} className='btn'>
-          <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src={props.myData.image} alt={props.myData.title} /> {/* Display post image */}
+          <Card style={{ width: '100%', textAlign: 'left' }}>
             <Card.Body>
               <Card.Title>{props.myData.title}</Card.Title> {/* Display post title */}
-              <Card.Text>Poster: {props.myData.owner}</Card.Text> {/* Display post owner */}
+              <Card.Text><b>Username: {props.myData.owner}</b></Card.Text> {/* Display post owner */}
+              {props.myData.content}
             </Card.Body>
-            {/* When clicked changes url to the url of the book */}
           </Card>
-        </Link>
-      </center>
     </div>
   );
 }
