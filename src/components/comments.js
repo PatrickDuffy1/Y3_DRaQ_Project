@@ -38,6 +38,9 @@ function Comments(props) {
                     <Button variant='secondary'>Like</Button>
                     <b style={{ paddingLeft: 10, paddingRight: 10 }}>{finalLikeCount}</b>
                     <Button variant='secondary'>Dislike</Button>
+                    <br></br>
+                    <Button variant='secondary' style={{ margin: '5px' }}>Edit</Button>
+                    <Button variant='secondary' style={{ margin: '5px' }}>Delete</Button>
                 </Card.Body>
                 {/* When clicked changes url to the url of the book */}
             </Card>

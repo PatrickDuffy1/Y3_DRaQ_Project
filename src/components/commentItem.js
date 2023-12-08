@@ -34,6 +34,8 @@ function CommentItem(props) {
           <Button variant='secondary'>Like</Button>
           <b style={{ paddingLeft: 10, paddingRight: 10 }}>{finalLikeCount}</b>
           <Button variant='secondary'>Dislike</Button>
+          <Button variant='secondary' style={{ margin: '5px', marginLeft: '10px' }}>Edit</Button>
+          <Button variant='secondary' style={{ margin: '5px' }}>Delete</Button>
 
         </Card.Body>
       </Card>

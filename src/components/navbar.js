@@ -15,6 +15,7 @@ function Navbar1() {
             <Nav.Link href="/read">Saved</Nav.Link>
             <Nav.Link href="/read">Inbox</Nav.Link>
             <Nav.Link href="/create">Settings</Nav.Link>
+            <Nav.Link href="/signin">Sign in</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
