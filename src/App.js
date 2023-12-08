@@ -5,6 +5,8 @@ import Navbar1 from './components/navbar';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import ReadPosts from './components/readPosts';
 import ReadComments from './components/readComments';
+import SignIn from './components/signIn';
+import CreateAccount from './components/createAccount';
 
 function App() {
   return (
@@ -19,6 +21,10 @@ function App() {
           <Route path='/' element={<ReadPosts></ReadPosts>}></Route>
 
           <Route path='/comments/:id' element={<ReadComments></ReadComments>}></Route>
+
+          <Route path='/signin' element={<SignIn></SignIn>}></Route>
+
+          <Route path='/createaccount' element={<CreateAccount></CreateAccount>}></Route>
         </Routes>
       </div>
     </BrowserRouter>

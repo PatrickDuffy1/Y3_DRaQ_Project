@@ -16,14 +16,13 @@ export default function SignIn() {
     // Your existing code for submitting data to the server
     // Adjust the URL and data handling as needed
     try {
-      const response = await axios.post('http://localhost:4000/signin', {
+      const response = await axios.post('http://localhost:4000/createaccount', {
         username,
         password,
       });
 
       console.log(response.data);
-      // Redirect or perform other actions based on the response
-      navigate('/success'); // Change the path accordingly
+      
     } catch (error) {
       console.error('Error submitting form:', error);
     }
@@ -31,7 +30,7 @@ export default function SignIn() {
 
   return (
     <div>
-      <h2>Sign in</h2>
+      <h2>Create account</h2>
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -61,7 +60,7 @@ export default function SignIn() {
       </form>
 
       <br></br>
-        <Button href="/createaccount">Create account</Button>
+        <Button href="/signin">I already have an account</Button>
     </div>
   );
 }

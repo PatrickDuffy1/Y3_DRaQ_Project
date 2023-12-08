@@ -1,3 +1,5 @@
+const { FindUsername, CheckPassword } = require('./credentialManager');
+
 const express = require('express')
 const app = express()
 const port = 4000; // Port that will be used
@@ -99,6 +101,68 @@ const data = [
 				"dislikes": ["User11", "User12", "User7", "User0"]
             }]
         }
+		],
+		
+		"accounts":
+		[
+			{
+				"_id": "0",
+				"username": "User1",
+				"accountCreated": ""
+			},
+			{
+				"_id": "1",
+				"username": "User2",
+				"accountCreated": ""
+			},
+			{
+				"_id": "2",
+				"username": "User45",
+				"accountCreated": ""
+			},
+			{
+				"_id": "3",
+				"username": "User12",
+				"accountCreated": ""
+			},
+			{
+				"_id": "4",
+				"username": "User17",
+				"accountCreated": ""
+			},
+			{
+				"_id": "5",
+				"username": "User6",
+				"accountCreated": ""
+			}
+		],
+		
+		"passwords":
+		[
+			{
+				"_id": "0",
+				"password": "dfg567"
+			},
+			{
+				"_id": "1",
+				"password": "fvbn4567"
+			},
+			{
+				"_id": "2",
+				"password": "cvbnmer234"
+			},
+			{
+				"_id": "3",
+				"password": "dfg678kjhg567"
+			},
+			{
+				"_id": "4",
+				"password": "zxcvbn"
+			},
+			{
+				"_id": "5",
+				"password": "123456"
+			}
 		]
     }
     ];
@@ -133,6 +197,24 @@ app.get('/api/books', (req, res) => {
         "Message": "Some useful Information",
         "Disclaimer": "Hello World!"
     })
+})
+
+app.post('/signin', (req, res) => {
+    console.log(req.body);
+	console.log("Username: " + req.body.username);
+	console.log("Password: " + req.body.password);
+	//console.log(data[0].accounts);
+
+	let usernameIndex = FindUsername(data[0].accounts, req.body.username);
+	let validPassword = false;
+
+	if(usernameIndex >= 0)
+	{
+		validPassword = CheckPassword(data[0].passwords, req.body.password);
+	}
+
+
+	console.log(usernameIndex + ", " + validPassword);
 })
 
 // Listen on the selected port
