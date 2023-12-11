@@ -1,9 +1,7 @@
-function FindUsername(accounts, username) 
-{
-    console.log(accounts);
+function FindUsername(accounts, username) {
+    //console.log(accounts);
 
-    for (const account of accounts) 
-    {
+    for (const account of accounts) {
         if (account.username == username) {
 
             return account._id;
@@ -13,19 +11,38 @@ function FindUsername(accounts, username)
     return -1;
 }
 
-function CheckPassword(passwords, password) 
-{
+function CheckPassword(passwords, password) {
     console.log(passwords);
 
-    for (const storedPassword of passwords) 
-    {
-        if (storedPassword.password == password) 
-        {
+    for (const storedPassword of passwords) {
+        if (storedPassword.password == password) {
             return true;
         }
     }
-    
+
     return false;
 }
 
-module.exports = { FindUsername, CheckPassword };
+function GetLoginJson(usernameIndex, correctPassword) {
+
+    console.log("AAAAAAAA");
+
+    validUsername = false;
+
+    if (usernameIndex >= 0) {
+        validUsername = true;
+    }
+
+    validLoginJson = [
+        {
+            "validUsername": validUsername,
+            "correctPassword": correctPassword
+        }
+    ]
+
+    //console.log(validLoginJson);
+
+    return validLoginJson;
+}
+
+module.exports = { FindUsername, CheckPassword, GetLoginJson };

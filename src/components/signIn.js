@@ -4,26 +4,52 @@ import axios from 'axios';
 import { Button } from 'react-bootstrap';
 
 export default function SignIn() {
+  
   const { id } = useParams();
   const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  let currentUserUsername = "";
+  let currentUserPassword = "";
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Your existing code for submitting data to the server
-    // Adjust the URL and data handling as needed
     try {
       const response = await axios.post('http://localhost:4000/signin', {
         username,
         password,
       });
 
+      console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n" + currentUserUsername);
       console.log(response.data);
-      // Redirect or perform other actions based on the response
-      navigate('/success'); // Change the path accordingly
+
+      console.log("Username: " + response.data[0].validUsername);
+      console.log("Password: " + response.data[0].correctPassword);
+
+      if (response.data[0].validUsername == false) 
+      {
+        setError("Invalid username");
+      } 
+      else if (response.data[0].correctPassword == false) 
+      {
+        setError("Invalid password");
+      } 
+      else if (response.data[0].validUsername == true && response.data[0].correctPassword == true) 
+      {
+        
+      } 
+      else 
+      {
+        setError("Login Error");
+      }
+
+      currentUserUsername = "asdfghj";
+
+      //navigate('/success');
     } catch (error) {
       console.error('Error submitting form:', error);
     }
@@ -58,10 +84,17 @@ export default function SignIn() {
         <div className="form-group">
           <input type="submit" value="Submit" className="btn btn-primary" />
         </div>
+
+        {error && (
+          <div className="error-message">
+            {error}
+          </div>
+        )}
+
       </form>
 
       <br></br>
-        <Button href="/createaccount">Create account</Button>
+      <Button href="/createaccount">Create account</Button>
     </div>
   );
 }

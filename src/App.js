@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar1 from './components/navbar';
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ReadPosts from './components/readPosts';
 import ReadComments from './components/readComments';
 import SignIn from './components/signIn';
@@ -26,6 +26,7 @@ function App() {
 
           <Route path='/createaccount' element={<CreateAccount></CreateAccount>}></Route>
         </Routes>
+
       </div>
     </BrowserRouter>
   );

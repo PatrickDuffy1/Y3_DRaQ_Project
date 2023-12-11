@@ -1,4 +1,4 @@
-const { FindUsername, CheckPassword } = require('./credentialManager');
+const { FindUsername, CheckPassword, GetLoginJson } = require('./credentialManager');
 
 const express = require('express')
 const app = express()
@@ -206,15 +206,17 @@ app.post('/signin', (req, res) => {
 	//console.log(data[0].accounts);
 
 	let usernameIndex = FindUsername(data[0].accounts, req.body.username);
-	let validPassword = false;
+	let correctPassword = false;
 
 	if(usernameIndex >= 0)
 	{
-		validPassword = CheckPassword(data[0].passwords, req.body.password);
+		correctPassword = CheckPassword(data[0].passwords, req.body.password);
 	}
 
 
-	console.log(usernameIndex + ", " + validPassword);
+	console.log(usernameIndex + ", " + correctPassword);
+	console.log(GetLoginJson(usernameIndex, correctPassword));
+	res.send(GetLoginJson(usernameIndex, correctPassword));
 })
 
 // Listen on the selected port

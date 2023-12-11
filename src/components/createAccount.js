@@ -13,8 +13,6 @@ export default function SignIn() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Your existing code for submitting data to the server
-    // Adjust the URL and data handling as needed
     try {
       const response = await axios.post('http://localhost:4000/createaccount', {
         username,

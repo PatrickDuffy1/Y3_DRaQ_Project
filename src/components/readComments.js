@@ -18,14 +18,13 @@ function ReadComments() {
             });
     }, [id]);
 
-    // This will only log after the axios call is complete and data has been updated
     useEffect(() => {
         console.log("AAAAAAAAAAAAAAAAAAA\n", data.edited, "\nBBBBBBBBBBBBBBBBBBBBB");
     }, [data]);
 
 
 
-    // Render your component based on the data
+    // Render component based on the data
     return (
         <div>
             {/* Check if data.comments is defined before rendering */}
