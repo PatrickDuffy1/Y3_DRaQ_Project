@@ -2,18 +2,17 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
+import { useAuth } from './AuthContext';
 
 export default function SignIn() {
-  
+  const { setCredentials } = useAuth(); // Use the useAuth hook to access context
+
   const { id } = useParams();
   const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
-  let currentUserUsername = "";
-  let currentUserPassword = "";
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -24,32 +23,20 @@ export default function SignIn() {
         password,
       });
 
-      console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n" + currentUserUsername);
-      console.log(response.data);
-
-      console.log("Username: " + response.data[0].validUsername);
-      console.log("Password: " + response.data[0].correctPassword);
-
-      if (response.data[0].validUsername == false) 
+      if (response.data[0].validUsername === false) 
       {
-        setError("Invalid username");
-      } 
-      else if (response.data[0].correctPassword == false) 
+        setError('Invalid username');
+      } else if (response.data[0].correctPassword === false) 
       {
-        setError("Invalid password");
-      } 
-      else if (response.data[0].validUsername == true && response.data[0].correctPassword == true) 
+        setError('Incorrect password');
+      } else if (response.data[0].validUsername === true && response.data[0].correctPassword === true) 
       {
-        
-      } 
-      else 
-      {
-        setError("Login Error");
+        // Set the credentials in the context
+        setCredentials(username);
+        navigate('/');
+      } else {
+        setError('Login Error');
       }
-
-      currentUserUsername = "asdfghj";
-
-      //navigate('/success');
     } catch (error) {
       console.error('Error submitting form:', error);
     }

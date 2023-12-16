@@ -2,8 +2,10 @@ import React from "react";
 import CommentItem from "./commentItem";
 import Card from 'react-bootstrap/Card';
 import { Button } from 'react-bootstrap';
+import { useAuth } from "./AuthContext";
 
 function Comments(props) {
+    const { currentUserUsername } = useAuth();
     //console.log(props.myData)
     const likes = props.myData.likes;
     const dislikes = props.myData.dislikes;
@@ -39,8 +41,14 @@ function Comments(props) {
                     <b style={{ paddingLeft: 10, paddingRight: 10 }}>{finalLikeCount}</b>
                     <Button variant='secondary'>Dislike</Button>
                     <br></br>
-                    <Button variant='secondary' style={{ margin: '5px' }}>Edit</Button>
-                    <Button variant='secondary' style={{ margin: '5px' }}>Delete</Button>
+
+                    {props.myData.owner == currentUserUsername && (
+                        <div>
+                            <Button variant='secondary' style={{ margin: '5px' }}>Edit</Button>
+                            <Button variant='secondary' style={{ margin: '5px' }}>Delete</Button>
+                        </div>
+                    )}
+
                 </Card.Body>
                 {/* When clicked changes url to the url of the book */}
             </Card>

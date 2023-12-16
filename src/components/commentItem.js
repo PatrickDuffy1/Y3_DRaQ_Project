@@ -2,8 +2,10 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import { Button } from 'react-bootstrap';
+import { useAuth } from './AuthContext';
 
 function CommentItem(props) {
+  const { currentUserUsername } = useAuth();
 
   const likes = props.myData.likes;
   const dislikes = props.myData.dislikes;
@@ -34,9 +36,13 @@ function CommentItem(props) {
           <Button variant='secondary'>Like</Button>
           <b style={{ paddingLeft: 10, paddingRight: 10 }}>{finalLikeCount}</b>
           <Button variant='secondary'>Dislike</Button>
-          <Button variant='secondary' style={{ margin: '5px', marginLeft: '10px' }}>Edit</Button>
-          <Button variant='secondary' style={{ margin: '5px' }}>Delete</Button>
 
+          {props.myData.owner == currentUserUsername && (
+            <>
+              <Button variant='secondary' style={{ margin: '5px', marginLeft: '10px' }}>Edit</Button>
+              <Button variant='secondary' style={{ margin: '5px' }}>Delete</Button>
+              </>
+          )}
         </Card.Body>
       </Card>
     </div>

@@ -44,7 +44,7 @@ const data = [
             {
                 "_id": "1",
                 "content": "The domains wikipedia.com (later redirecting to wikipedia.org) and wikipedia.org were registered on January 12, 2001,[27] and January 13, 2001,[28] respectively. Wikipedia was launched on January 15, 2001[20] as a single English-language edition at www.wikipedia.com,[29] and was announced by Sanger on the Nupedia mailing list.[23] The name originated from a blend of the words wiki and encyclopedia.[30][31] Its integral policy of \"neutral point-of-view\"[32] was codified in its first few months. Otherwise, there were initially relatively few rules, and it operated independently of Nupedia.[23] Bomis originally intended it as a business for profit",
-				"owner": "RandomUser7",
+				"owner": "User1",
                 "edited": true,
 				"likes": ["User1", "User2"],
 				"dislikes": ["User3", "User1", "User2", "User7", "User0"]
@@ -52,7 +52,7 @@ const data = [
             {
                 "_id": "2",
                 "content": "In January 2007, Wikipedia first became one of the ten most popular websites in the United States, according to Comscore Networks.",
-				"owner": "RandomUser6",
+				"owner": "User1",
                 "edited": false,
 				"likes": ["User1", "User2", "User11"],
 				"dislikes": ["User3"]
@@ -63,7 +63,7 @@ const data = [
             "title": "A post about Ireland",
             "image": "https://upload.wikimedia.org/wikipedia/commons/7/74/Ireland_%28MODIS%29.jpg",
             "content": "Ireland (/ˈaɪərlənd/ ⓘ YRE-lənd; Irish: Éire [ˈeːɾʲə] ⓘ; Ulster-Scots: Airlann [ˈɑːrlən]) is an island in the North Atlantic Ocean, in north-western Europe. It is separated from Great Britain to its east by the North Channel, the Irish Sea, and St George's Channel. Ireland is the second-largest island of the British Isles, the third-largest in Europe, and the twentieth-largest in the world.[11] Geopolitically, the island of Ireland is divided between the Republic of Ireland (officially named Ireland), an independent state covering five-sixths of the island, and Northern Ireland, which is part of the United Kingdom. As of 2022, the population of the entire island is just over 7 million, with 5.1 million living in the Republic of Ireland and 1.9 million in Northern Ireland, ranking it the second-most populous island in Europe after Great Britain.",
-            "owner": "RandomUser2",
+            "owner": "User1",
             "likes": ["User1", "User2"],
 			"dislikes": ["User3"],
             "edited": true,
@@ -79,7 +79,7 @@ const data = [
             {
                 "_id": "1",
                 "content": "All of the Irish kingdoms had their own kings but were nominally subject to the high king. The high king was drawn from the ranks of the provincial kings and ruled also the royal kingdom of Meath, with a ceremonial capital at the Hill of Tara.",
-				"owner": "RandomUser1",
+				"owner": "User1",
                 "edited": true,
 				"likes": ["User1", "User2"],
 				"dislikes": ["User3"]
@@ -95,7 +95,7 @@ const data = [
             {
                 "_id": "3",
                 "content": "From the 9th century, waves of Viking raiders plundered Irish monasteries and towns.",
-				"owner": "RandomUser23",
+				"owner": "User1",
                 "edited": false,
 				"likes": ["User1", "User2"],
 				"dislikes": ["User11", "User12", "User7", "User0"]
