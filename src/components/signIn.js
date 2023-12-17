@@ -2,16 +2,19 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
-import { useAuth } from './AuthContext';
 
 export default function SignIn() {
-  const { setCredentials } = useAuth();
 
-  const { id } = useParams();
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const storedUsername = localStorage.getItem('username') || "";
+  const storedPassword = localStorage.getItem('password') || "";
+
+  console.log(storedUsername);
+  console.log(storedPassword);
+
+  const [username, setUsername] = useState(storedUsername);
+  const [password, setPassword] = useState(storedPassword);
   const [error, setError] = useState('');
 
   const handleSubmit = async (event) => {
@@ -31,8 +34,8 @@ export default function SignIn() {
         setError('Incorrect password');
       } else if (response.data[0].validUsername === true && response.data[0].correctPassword === true) 
       {
-        // Set the credentials in the context
-        setCredentials(username);
+        localStorage.setItem('username', username);
+        localStorage.setItem('password', password);
         navigate('/');
       } else {
         setError('Login Error');
@@ -40,6 +43,14 @@ export default function SignIn() {
     } catch (error) {
       console.error('Error submitting form:', error);
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('username');
+    localStorage.removeItem('password');
+    setUsername('');
+    setPassword('');
+    navigate('/signin');
   };
 
   return (
@@ -82,6 +93,14 @@ export default function SignIn() {
 
       <br></br>
       <Button href="/createaccount">Create account</Button>
+      <br></br><br></br>
+      {storedUsername !== '' && (
+        <div>
+          <h5>Currenly signed in as: {storedUsername}</h5>
+          <Button onClick={handleLogout}>Logout</Button>
+        </div>
+      
+    )}
     </div>
   );
 }

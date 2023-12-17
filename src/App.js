@@ -7,12 +7,10 @@ import ReadPosts from './components/readPosts';
 import ReadComments from './components/readComments';
 import SignIn from './components/signIn';
 import CreateAccount from './components/createAccount';
-import { AuthProvider } from './components/AuthContext';
 
 function App() {
   return (
     <BrowserRouter>
-    <AuthProvider>
       <div className="App">
         {/* Displays Nav Bar */}
         <Navbar1></Navbar1>
@@ -31,7 +29,6 @@ function App() {
         </Routes>
 
       </div>
-      </AuthProvider>
     </BrowserRouter>
   );
 }

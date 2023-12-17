@@ -2,10 +2,9 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import { Button } from 'react-bootstrap';
-import { useAuth } from './AuthContext';
 
 function CommentItem(props) {
-  const { currentUserUsername } = useAuth();
+  const storedUsername = localStorage.getItem('username') || "";
 
   const likes = props.myData.likes;
   const dislikes = props.myData.dislikes;
@@ -37,7 +36,7 @@ function CommentItem(props) {
           <b style={{ paddingLeft: 10, paddingRight: 10 }}>{finalLikeCount}</b>
           <Button variant='secondary'>Dislike</Button>
 
-          {props.myData.owner == currentUserUsername && (
+          {props.myData.owner == storedUsername && (
             <>
               <Button variant='secondary' style={{ margin: '5px', marginLeft: '10px' }}>Edit</Button>
               <Button variant='secondary' style={{ margin: '5px' }}>Delete</Button>
