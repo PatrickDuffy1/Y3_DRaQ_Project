@@ -1,16 +1,22 @@
-
 import React from "react";
 import PostsItem from "./postsItem";
+import { Button } from 'react-bootstrap';
 
-function Posts(props)
-{
-    // Creates map out of myBooks
-    return props.myData.map
-    (
-        (post)=>
-        {
-            return <PostsItem myData={post} key={post._id}></PostsItem> // Passes the current book to BooksItem and sets the isbn as the key
-        }
+function Posts(props) {
+    const storedUsername = localStorage.getItem('username') || "";
+
+    console.log(props);
+
+    return (
+        <div>
+            {storedUsername !== "" && (
+                <Button href="/createpost" style={{ width: '100%' }}>Create Post</Button>
+            )}
+
+            {props.myData.map((post) => (
+                <PostsItem myData={post} key={post._id}></PostsItem>
+            ))}
+        </div>
     );
 }
 

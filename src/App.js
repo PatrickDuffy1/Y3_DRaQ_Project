@@ -7,6 +7,7 @@ import ReadPosts from './components/readPosts';
 import ReadComments from './components/readComments';
 import SignIn from './components/signIn';
 import CreateAccount from './components/createAccount';
+import CreatePost from './components/createPost';
 
 function App() {
   return (
@@ -26,6 +27,8 @@ function App() {
           <Route path='/signin' element={<SignIn></SignIn>}></Route>
 
           <Route path='/createaccount' element={<CreateAccount></CreateAccount>}></Route>
+
+          <Route path='/createpost' element={<CreatePost></CreatePost>}></Route>
         </Routes>
 
       </div>
