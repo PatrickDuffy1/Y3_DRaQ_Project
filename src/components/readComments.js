@@ -8,7 +8,7 @@ function ReadComments() {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:4000/comments/' + id)
+        axios.get('http://localhost:4000/post/' + id)
             .then((response) => {
                 console.log(response.data);
                 setData(response.data);

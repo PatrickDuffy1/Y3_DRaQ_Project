@@ -14,12 +14,14 @@ function PostsItem(props) {
   const dislikeCount = dislikes.length;
   const finalLikeCount = likeCount - dislikeCount;
 
-  console.log("AAAAAAAAAAAAAAAA\n" + currentUserUsername + "\nBBBBBBBBBBBBBBBBBBBBBBBBBB");
+  //console.log("AAAAAAAAAAAAAAAA\n" + currentUserUsername + "\nBBBBBBBBBBBBBBBBBBBBBBBBBB");
+  console.log(props.myData._id + " " + props.myData.title);
+  console.log(currentUserUsername);
 
   return (
     <div>
       <center>
-        <Link to={'/comments/' + props.myData._id} className='btn' style={{ width: '100%' }}>
+        <Link to={'/post/' + props.myData._id} className='btn' style={{ width: '100%' }}>
           <Card>
             <center>
               <Card.Img variant="top" src={props.myData.image} alt={props.myData.title} style={{ width: '18rem' }} />

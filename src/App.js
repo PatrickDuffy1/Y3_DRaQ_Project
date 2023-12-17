@@ -23,7 +23,7 @@ function App() {
           {/* Routes to Home page */}
           <Route path='/' element={<ReadPosts></ReadPosts>}></Route>
 
-          <Route path='/comments/:id' element={<ReadComments></ReadComments>}></Route>
+          <Route path='/post/:id' element={<ReadComments></ReadComments>}></Route>
 
           <Route path='/signin' element={<SignIn></SignIn>}></Route>
 

@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap';
 import { useAuth } from './AuthContext';
 
 export default function SignIn() {
-  const { setCredentials } = useAuth(); // Use the useAuth hook to access context
+  const { setCredentials } = useAuth();
 
   const { id } = useParams();
   const navigate = useNavigate();
