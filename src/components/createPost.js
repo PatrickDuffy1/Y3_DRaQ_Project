@@ -1,8 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
+import { useParams, useNavigate } from 'react-router-dom';
 
 function CreatePost()
 {
+    const navigate = useNavigate();
+
     const storedUsername = localStorage.getItem('username') || "";
     let dateCreated;
 
@@ -21,18 +24,20 @@ function CreatePost()
         console.log("Username: " + storedUsername + ", Date Created: " + dateCreated);
     
         // Store book data 
-        const book = {
+        const newPost = {
             title: title,
-            cover: image,
-            author: content,
+            image: image,
+            content: content,
             username: storedUsername,
             dateCreated: dateCreated,
         };
     
         // Post the new book data to the server JSON
-        axios.post('http://localhost:4000/api/post', book)
+        axios.post('http://localhost:4000/api/post', newPost)
             .then()
             .catch();
+
+        navigate('/');
     };
     
 

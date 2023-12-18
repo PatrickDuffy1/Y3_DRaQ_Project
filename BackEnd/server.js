@@ -1,7 +1,7 @@
 //const { FindUsername, CheckPassword, GetLoginJson } = require('./credentialManager');
 
 const mongoose = require('mongoose');
-const { Types: { ObjectId } } = mongoose;
+//const { Types: { ObjectId } } = mongoose;
 
 const express = require('express')
 const app = express()
@@ -36,7 +36,7 @@ async function main() {
 
 
 const commentSchema = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
+    //_id: mongoose.Schema.Types.ObjectId,
     content: String,
     owner: String,
     edited: Boolean,
@@ -46,10 +46,10 @@ const commentSchema = new mongoose.Schema({
 });
 
 const forumSchema = new mongoose.Schema({
-    _id: {
-        type: mongoose.Schema.Types.ObjectId,
-        default: mongoose.Types.ObjectId,
-    },
+    // _id: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     default: mongoose.Types.ObjectId,
+    // },
     title: String,
     image: String,
     content: String,
@@ -62,21 +62,21 @@ const forumSchema = new mongoose.Schema({
 });
 
 const accountSchema = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
+    //_id: mongoose.Schema.Types.ObjectId,
     username: String,
     accountCreated: String,
 });
 
 const userAccountSchema = new mongoose.Schema({
-    _id: {
-        type: mongoose.Schema.Types.ObjectId,
-        default: mongoose.Types.ObjectId
-    },
+    // _id: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     default: mongoose.Types.ObjectId
+    // },
     accounts: [accountSchema],
 });
 
 const passwordSchema = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
+    //_id: mongoose.Schema.Types.ObjectId,
     password: String
 });
 
@@ -175,36 +175,22 @@ app.post('/api/post', (req, res) => {
         title: req.body.title,
         image: req.body.image,
         content: req.body.content,
-        owner: req.body.owner,
+        owner: req.body.username,
         edited: false,
         dateCreated: req.body.dateCreated,
         likes: [],
         dislikes: [],
         comments: []
     })
-        .then(() => { res.send('Book created') }) // Callback function
-        .catch(() => { res.send('Book NOT created') }); // Callback function
+    .then(() => { console.log("Created Post:", createdPost);res.send('Book created') }) // Callback function
+    .catch(() => { res.send('Book NOT created') }); // Callback function
 });
+
 
 // Listen on the selected port
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
-
-
-// async function FindUsername(username) {
-//     try {
-//         const account = await ForumModel.findOne({ "accounts.username": username });
-//         if (account) {
-//             return account.accounts[0]._id;
-//         } else {
-//             return -1;
-//         }
-//     } catch (error) {
-//         //console.error("Error finding username:", error);
-//         return -1;
-//     }
-// }
 
 async function CheckCredentials(username, password) {
 
