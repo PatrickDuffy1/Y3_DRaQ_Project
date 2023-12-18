@@ -87,7 +87,7 @@ app.get('/', async (req, res) => {
   
 	const posts = await ForumModel.find({ title: { $exists: true } }).select('-posts -accounts -passwords');
 	res.json(posts);
-	console.log(posts); 
+	//console.log(posts); 
   });
   
 
@@ -118,14 +118,14 @@ app.post('/signin', async (req, res) => {
 	// if (usernameIndex >= 0) {
 	let loginResult;
 
-	loginResult = await CheckPassword(req.body.username, req.body.password);
+	loginResult = await CheckCredentials(req.body.username, req.body.password);
 	//}
 
 	let validationStatus = await GetLoginJson(loginResult);
 
 
 	//console.log(loginResult);
-	//console.log(validationStatus);
+	console.log(validationStatus);
 	//console.log("BBBBBBBBBBBBBBBB");
 	res.send(validationStatus);
 	//console.log("CCCCCCCCCCCCCCCCCC");
@@ -177,37 +177,79 @@ app.listen(port, () => {
 //     }
 // }
 
-async function CheckPassword(username, password) {
+async function CheckCredentials(username, password) {
 	// Get the ObjectId associated with the given username
-	const userObject = await ForumModel.findOne(
-		{ "accounts.username": username },
-		{ "_id": 0, "accounts.$": 1 }
-	);
+	const userObject = await ForumModel.aggregate([
+        {
+          $match: {
+            "accounts": { $exists: true },
+            "accounts.username": username
+          }
+        },
+        {
+          $unwind: "$accounts"
+        },
+        {
+          $match: {
+            "accounts.username": username
+          }
+        },
+        {
+          $project: {
+            _id: "$accounts._id"
+          }
+        }
+      ]);
+      
+
+    //console.log(userObject);
 
 	// Extract the nested object from the result
 	
 	//const extractedUserId = (userObjectId.usernames[0]).toString();
 
-	const passwordObject = await ForumModel.findOne(
-		{ "passwords.password": password },
-		{ "_id": 0, "passwords.$": 1 }
-	);
+    const passwordObject = await ForumModel.aggregate([
+        {
+          $match: {
+            "passwords": { $exists: true },
+            "passwords.password": password
+          }
+        },
+        {
+          $unwind: "$passwords"
+        },
+        {
+          $match: {
+            "passwords.password": password
+          }
+        },
+        {
+          $project: {
+            _id: "$passwords._id"
+          }
+        }
+      ]);
+
+      //console.log(passwordObject);
 
 	
 
-	if(userObject)
+	if(userObject.length > 0)
 	{
-		let userObjectId = userObject?.accounts?.[0]._id;
+		let userObjectId = userObject?.[0]._id;
 		userObjectId = userObjectId.toString();
+        
+        //console.log("AAAAAAAAAA");
 
-		if(passwordObject)
+		if(passwordObject.length > 0)
 		{
-			let passwordObjectId = passwordObject?.passwords?.[0]._id;
+			let passwordObjectId = passwordObject?.[0]._id;
 			passwordObjectId = passwordObjectId.toString();
+            // console.log("BBBBBBBBBBBBBBB");
 
-			//console.log(userObjectId);
-			//console.log(passwordObjectId);
-			//console.log(userObjectId == passwordObjectId);
+			// console.log(userObjectId);
+			// console.log(passwordObjectId);
+			// console.log(userObjectId == passwordObjectId);
 
 			if(userObjectId == passwordObjectId)
 			{
