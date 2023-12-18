@@ -7,6 +7,8 @@ function Posts(props) {
 
     console.log(props);
 
+    
+
     return (
         <div>
             {storedUsername !== "" && (
@@ -14,7 +16,7 @@ function Posts(props) {
             )}
 
             {props.myData.map((post) => (
-                <PostsItem myData={post} key={post._id}></PostsItem>
+                <PostsItem myData={post} key={post._id} Reload={()=>{props.ReloadData()}}></PostsItem>
             ))}
         </div>
     );

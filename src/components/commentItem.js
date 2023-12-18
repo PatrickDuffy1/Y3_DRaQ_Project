@@ -2,8 +2,11 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import { Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function CommentItem(props) {
+    const navigate = useNavigate();
   const storedUsername = localStorage.getItem('username') || "";
 
   const likes = props.myData.likes;

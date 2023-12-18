@@ -182,10 +182,17 @@ app.post('/api/post', (req, res) => {
         dislikes: [],
         comments: []
     })
-    .then(() => { console.log("Created Post:", createdPost);res.send('Book created') }) // Callback function
+    .then(() => { res.send('Book created') }) // Callback function
     .catch(() => { res.send('Book NOT created') }); // Callback function
 });
 
+app.delete('/api/post/:id', async(req, res) =>{
+
+    console.log("Delete: " + req.params.id);
+ 
+    let post = await forumModel.findByIdAndDelete(req.params.id); // Find book by id and delete it from the database
+    res.send(post); // Will not ecxecute unitl book has been deleted
+ })
 
 // Listen on the selected port
 app.listen(port, () => {

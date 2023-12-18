@@ -2,8 +2,11 @@ import React from "react";
 import CommentItem from "./commentItem";
 import Card from 'react-bootstrap/Card';
 import { Button } from 'react-bootstrap';
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 function Comments(props) {
+    const navigate = useNavigate();
     const storedUsername = localStorage.getItem('username') || "";
     //console.log(props.myData)
     const likes = props.myData.likes;
@@ -44,7 +47,14 @@ function Comments(props) {
                     {props.myData.owner == storedUsername && (
                         <div>
                             <Button variant='secondary' style={{ margin: '5px' }}>Edit</Button>
-                            <Button variant='secondary' style={{ margin: '5px' }}>Delete</Button>
+                            <Button variant='secondary' style={{ margin: '5px' }} onClick={(e) => {
+                                axios.delete('http://localhost:4000/api/post/' + props.myData._id)
+                                    .then((res) => {
+                                        //let reload = props.Reload(); // Invoke the reload fuction tat was passed from read to bookItem
+                                        navigate('/');
+                                    })
+                                    .catch();
+                            }}>Delete</Button>
                         </div>
                     )}
 
