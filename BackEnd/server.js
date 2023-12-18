@@ -194,6 +194,25 @@ app.delete('/api/post/:id', async(req, res) =>{
     res.send(post); // Will not ecxecute unitl book has been deleted
  })
 
+ // Find book by id and update it based on the values the user submitted
+ app.put('/api/post/:id', async (req, res) => {
+    console.log("Update: " + req.params.id);
+    console.log("AAAAAAAAAAAAAAAAAAAA");
+
+    // Create a new object with only the attributes to be updated
+    const updateObject = {
+        title: req.body.title,
+        image: req.body.image,
+        content: req.body.content,
+        edited: true
+    };
+
+    // Use the new object in the findByIdAndUpdate method
+    let post = await forumModel.findByIdAndUpdate(req.params.id, updateObject, { new: true });
+    console.log("BBBBBBBBBBBBBBBBBB");
+    res.send(post);
+});
+
 // Listen on the selected port
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)

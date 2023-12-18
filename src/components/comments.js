@@ -46,11 +46,10 @@ function Comments(props) {
 
                     {props.myData.owner == storedUsername && (
                         <div>
-                            <Button variant='secondary' style={{ margin: '5px' }}>Edit</Button>
+                            <Button variant='secondary' style={{ margin: '5px' }} href={'/edit/' + props.myData._id}>Edit</Button>
                             <Button variant='secondary' style={{ margin: '5px' }} onClick={(e) => {
                                 axios.delete('http://localhost:4000/api/post/' + props.myData._id)
                                     .then((res) => {
-                                        //let reload = props.Reload(); // Invoke the reload fuction tat was passed from read to bookItem
                                         navigate('/');
                                     })
                                     .catch();
@@ -64,7 +63,7 @@ function Comments(props) {
 
             {/* Creates map out of comments */}
             {props.myData.comments.map((comment) => (
-                <CommentItem myData={comment} key={comment._id}></CommentItem>
+                <CommentItem myData={comment} key={comment._id} Reload={()=>{props.ReloadData()}}></CommentItem>
             ))}
         </div>
     );

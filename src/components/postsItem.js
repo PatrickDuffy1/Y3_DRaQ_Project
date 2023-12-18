@@ -20,26 +20,35 @@ function PostsItem(props) {
   console.log(props.myData._id + " " + props.myData.title);
   console.log(storedUsername);
 
+  
+
   return (
     <div>
       <center>
         <Link to={'/post/' + props.myData._id} className='btn' style={{ width: '100%' }}>
           <Card>
             <center>
+            <br></br>
               <Card.Img variant="top" src={props.myData.image} alt={props.myData.title} style={{ width: '18rem' }} />
             </center>
 
             <Card.Body>
               <Card.Title>{props.myData.title}</Card.Title>
               <Card.Text>Username: {props.myData.owner}</Card.Text>
-              <Button variant='secondary'>Like</Button>
+              {/* <Button variant='secondary'>Like</Button>
               <b style={{ paddingLeft: 10, paddingRight: 10 }}>{finalLikeCount}</b>
               <Button variant='secondary'>Dislike</Button>
-              <br></br>
+              <br></br> */}
 
-              {props.myData.owner == storedUsername && (
+              
+
+            </Card.Body>
+          </Card>
+        </Link>
+
+        {props.myData.owner == storedUsername && (
                 <div>
-                  <Button variant='secondary' style={{ margin: '5px' }}>Edit</Button>
+                  <Button variant='secondary' style={{ margin: '5px' } } href={'/edit/' + props.myData._id}>Edit</Button>
                   <Button variant='secondary' style={{ margin: '5px' }} onClick={(e)=>{
                     axios.delete('http://localhost:4000/api/post/' + props.myData._id)
                     .then((res)=>{
@@ -48,12 +57,9 @@ function PostsItem(props) {
                     })
                     .catch();
                 }}>Delete</Button>
+                <br></br><br></br>
                 </div>
               )}
-
-            </Card.Body>
-          </Card>
-        </Link>
       </center>
     </div>
   );

@@ -1,10 +1,13 @@
-import { useState } from "react";
-import axios from "axios";
-import { useParams, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams, useNavigate } from "react-router-dom";
 
-function CreatePost()
+function EditPost(props)
 {
     const navigate = useNavigate();
+
+    let { id } = useParams();
 
     const storedUsername = localStorage.getItem('username') || "";
     let dateCreated;
@@ -13,12 +16,25 @@ function CreatePost()
     const[image, setImage] = useState(''); // Set book cover
     const[content, setContent] = useState(''); // Set book author
 
+    //useEffect Hook is similar componentDidMount
+    useEffect(() => {
+
+        //axios is a promised based web client
+        //make a HTTP Request with GET method and pass as part of the url.
+        axios.get('http://localhost:4000/post/' + id)
+            .then((response) => {
+                // Assign Response data to the arrays using useState.
+                setTitle(response.data.title);
+                setImage(response.data.image);
+                setContent(response.data.content);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }, []);
+
     const handleSubmit = (e) => {
         e.preventDefault();
-    
-        // Get the current date and time
-        const currentDate = new Date();
-        dateCreated = currentDate.toISOString();
     
         console.log("Title: " + title + ", Image: " + image + ", Content: " + content);
         console.log("Username: " + storedUsername + ", Date Created: " + dateCreated);
@@ -28,12 +44,11 @@ function CreatePost()
             title: title,
             image: image,
             content: content,
-            username: storedUsername,
-            dateCreated: dateCreated,
+            edited: true
         };
     
-        // Post the new book data to the server JSON
-        axios.post('http://localhost:4000/api/post', newPost)
+        // Put the new book data to the server JSON
+        axios.put('http://localhost:4000/api/post/' + id, newPost)
             .then()
             .catch();
 
@@ -43,14 +58,14 @@ function CreatePost()
 
     return(
         <div>
-            <h3>Create Post</h3>
+            <h3>Edit Post</h3>
 
             {/* Form for adding new book */}
             <form onSubmit={handleSubmit}>
                 
                 {/* Input for adding book title */}
                 <div className="form-group">
-                    <label>Add Post Title: </label>
+                    <label>Edit Post Title: </label>
                     <input type="text"
                     className="form-control"
                     value={title} // Sets value of input box to title
@@ -60,7 +75,7 @@ function CreatePost()
 
                 {/* Input for adding book cover */}
                 <div className="form-group">
-                    <label>Add Post Image: </label>
+                    <label>Edit Post Image: </label>
                     <input type="text"
                     className="form-control"
                     value={image} // Sets value of input box to cover
@@ -70,7 +85,7 @@ function CreatePost()
 
                 {/* Input for adding book author */}
                 <div className="form-group">
-                    <label>Add Post Content: </label>
+                    <label>Edit Post Content: </label>
                     <input type="text"
                     className="form-control"
                     value={content} // Sets value of input box to author
@@ -80,7 +95,7 @@ function CreatePost()
 
                 {/* Calls handleSubmit when clicked */}
                 <div>
-                    <input type="submit" value="Add Post"></input>
+                    <input type="submit" value="Edit Post"></input>
                 </div>
 
             </form>
@@ -88,4 +103,4 @@ function CreatePost()
     );
 }
 
-export default CreatePost;
+export default EditPost;
