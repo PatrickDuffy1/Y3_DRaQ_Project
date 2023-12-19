@@ -43,8 +43,7 @@ function EditPost(props)
         const newPost = {
             title: title,
             image: image,
-            content: content,
-            edited: true
+            content: content
         };
     
         // Put the new book data to the server JSON
