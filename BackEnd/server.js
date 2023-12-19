@@ -29,9 +29,6 @@ main().catch(err => console.log(err));
 async function main() {
 
     await mongoose.connect('mongodb+srv://adminadmin:adminadmin@cluster0.g7sn3k5.mongodb.net/MyDatabase?retryWrites=true&w=majority');
-
-
-    // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
 }
 
 
@@ -83,9 +80,6 @@ app.get('/', async (req, res) => {
     //console.log(posts); 
 });
 
-
-
-
 app.get('/post/:id', async (req, res) => {
     const postId = req.params.id;
 
@@ -114,6 +108,66 @@ app.post('/signin', async (req, res) => {
     //console.log("BBBBBBBBBBBBBBBB");
     res.send(validationStatus);
     //console.log("CCCCCCCCCCCCCCCCCC");
+})
+
+app.post('/createaccount', async (req, res) => {
+
+    let usernameStatus = 0;
+    let passwordStatus = false;
+
+    if ((req.body.username).length > 0) {
+
+        if ((await getUsernameId(req.body.username)) == "") {
+            usernameStatus = 2;
+
+            if ((req.body.password).length > 0) {
+                passwordStatus = true;
+
+                const currentDate = new Date();
+                let dateCreated = currentDate.toISOString();
+
+                await userAccountModel.updateOne(
+                    {},
+                    {
+                        $push: {
+                            'accounts': {
+                                username: req.body.username,
+                                accountCreated: dateCreated,
+                            },
+                        },
+                    }
+                );
+
+                //console.log(updatedUser);
+
+                userId = await getUsernameId(req.body.username);
+
+                await passwordModel.updateOne(
+                    {},
+                    {
+                        $push: {
+                            'passwords': {
+                                _id: userId,
+                                password: req.body.password,
+                            },
+                        },
+                    }
+                );
+            }
+        }
+        else {
+            usernameStatus = 1;
+        }
+    }
+
+    let validNewAccountJson = [
+        {
+            "usernameStatus": usernameStatus,
+            "passwordStatus": passwordStatus
+        }
+    ];
+
+    res.send(validNewAccountJson);
 })
 
 app.post('/api/post', (req, res) => {
@@ -164,12 +218,12 @@ app.get('/api/comment/:id/:cid', async (req, res) => {
 
     try {
         const post = await forumModel.findOne(
-          { _id: req.params.id, 'comments._id': req.params.cid },
-          { 'comments.$': 1 }
+            { _id: req.params.id, 'comments._id': req.params.cid },
+            { 'comments.$': 1 }
         );
 
         if (!post) {
-          return res.status(404).send('Comment not found');
+            return res.status(404).send('Comment not found');
         }
 
         const comment = post.comments[0];
@@ -223,17 +277,17 @@ app.delete('/api/comment/:id/:cid', async (req, res) => {
 
     try {
         const updatedDocument = await forumModel.findOneAndUpdate(
-          { _id: req.params.id },
-          { $pull: { comments: { _id: req.params.cid } } },
-          { new: true }
+            { _id: req.params.id },
+            { $pull: { comments: { _id: req.params.cid } } },
+            { new: true }
         );
         console.log("Comment deleted successfully:", updatedDocument);
         res.status(200).json(updatedDocument);
-      } catch (err) {
+    } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
-      }
-      
+    }
+
     //res.send(post); // Will not ecxecute unitl book has been deleted
 })
 
@@ -278,70 +332,77 @@ app.put('/editcomment/:id/:cid', async (req, res) => {
 
 
 
-    // Listen on the selected port
-    app.listen(port, () => {
-        console.log(`Example app listening on port ${port}`)
-    })
+// Listen on the selected port
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+})
 
-    async function CheckCredentials(username, password) {
+async function CheckCredentials(username, password) {
 
+    let userObjectId = await getUsernameId(username);
+    let passwordObjectId = await getPasswordId(password);
 
-        const userObject = await userAccountModel.findOne({ 'accounts.username': username }, { '_id': 1, 'accounts.$': 1 });
-        console.log(userObject);
+    if (userObjectId != "") {
 
-        const passwordObject = await passwordModel.findOne({ 'passwords.password': password }, { '_id': 1, 'passwords.$': 1 });
-        console.log(passwordObject);
+        if (passwordObjectId != "") {
 
-
-        if (userObject) {
-            let userObjectId = userObject.accounts[0]._id;
-            userObjectId = userObjectId.toString();
-            //console.log(userObjectId);
-
-            //console.log("AAAAAAAAAA");
-
-            if (passwordObject) {
-                let passwordObjectId = passwordObject.passwords[0]._id;
-                passwordObjectId = passwordObjectId.toString();
-                // console.log("BBBBBBBBBBBBBBB");
-
-                console.log(userObjectId);
-                console.log(passwordObjectId);
-                // console.log(userObjectId == passwordObjectId);
-
-                if (userObjectId == passwordObjectId) {
-                    return 2;
-                }
+            if (userObjectId == passwordObjectId) {
+                return 2;
             }
-
-            return 1;
-
         }
 
-        return 0;
+        return 1;
     }
 
+    return 0;
+}
 
-    async function GetLoginJson(loginResult) {
-        //console.log("AAAAAAAA");
 
-        let validUsername = false;
-        let correctPassword = false;
+async function GetLoginJson(loginResult) {
+    //console.log("AAAAAAAA");
 
-        if (loginResult > 0) {
-            validUsername = true;
-        }
+    let validUsername = false;
+    let correctPassword = false;
 
-        if (loginResult == 2) {
-            correctPassword = true;
-        }
-
-        let validLoginJson = [
-            {
-                "validUsername": validUsername,
-                "correctPassword": correctPassword
-            }
-        ];
-
-        return validLoginJson;
+    if (loginResult > 0) {
+        validUsername = true;
     }
+
+    if (loginResult == 2) {
+        correctPassword = true;
+    }
+
+    let validLoginJson = [
+        {
+            "validUsername": validUsername,
+            "correctPassword": correctPassword
+        }
+    ];
+
+    return validLoginJson;
+}
+
+async function getUsernameId(username) {
+    const userObject = await userAccountModel.findOne({ 'accounts.username': username }, { '_id': 1, 'accounts.$': 1 });
+
+    if (userObject) {
+        let userObjectId = userObject.accounts[0]._id;
+        userObjectId = userObjectId.toString();
+
+        return userObjectId;
+    }
+    return "";
+}
+
+async function getPasswordId(password) {
+    const passwordObject = await passwordModel.findOne({ 'passwords.password': password }, { '_id': 1, 'passwords.$': 1 });
+
+    if (passwordObject) {
+        let passwordObjectId = passwordObject.passwords[0]._id;
+        passwordObjectId = passwordObjectId.toString();
+
+        return passwordObjectId;
+    }
+    return "";
+}
+
