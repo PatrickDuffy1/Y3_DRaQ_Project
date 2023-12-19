@@ -9,6 +9,8 @@ import SignIn from './components/signIn';
 import CreateAccount from './components/createAccount';
 import CreatePost from './components/createPost';
 import EditPost from './components/editPost';
+import CreateComment from './components/createComment';
+import EditComment from './components/editComment';
 
 function App() {
   return (
@@ -32,6 +34,10 @@ function App() {
           <Route path='/createpost' element={<CreatePost></CreatePost>}></Route>
 
           <Route path='/edit/:id' element={<EditPost></EditPost>}></Route>
+
+          <Route path='/createcomment/:id' element={<CreateComment></CreateComment>}></Route>
+
+          <Route path='/editcomment/:id/:cid' element={<EditComment></EditComment>}></Route>
 
         </Routes>
 

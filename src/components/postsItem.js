@@ -34,6 +34,7 @@ function PostsItem(props) {
 
             <Card.Body>
               <Card.Title>{props.myData.title}</Card.Title>
+              <Card.Text>Created: {new Date(props.myData.dateCreated).toLocaleString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).replace('24', '00')}</Card.Text>
               <Card.Text>Username: {props.myData.owner}</Card.Text>
               {/* <Button variant='secondary'>Like</Button>
               <b style={{ paddingLeft: 10, paddingRight: 10 }}>{finalLikeCount}</b>

@@ -94,6 +94,7 @@ function EditPost(props)
 
                 {/* Calls handleSubmit when clicked */}
                 <div>
+                    <br></br>
                     <input type="submit" value="Edit Post"></input>
                 </div>
 

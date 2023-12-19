@@ -80,6 +80,7 @@ function CreatePost()
 
                 {/* Calls handleSubmit when clicked */}
                 <div>
+                    <br></br>
                     <input type="submit" value="Add Post"></input>
                 </div>
 
