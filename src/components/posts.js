@@ -7,8 +7,6 @@ function Posts(props) {
 
     console.log(props);
 
-    
-
     return (
         <div>
             {storedUsername !== "" && (

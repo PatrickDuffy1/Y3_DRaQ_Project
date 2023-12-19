@@ -9,13 +9,6 @@ function PostsItem(props) {
     const navigate = useNavigate();
   const storedUsername = localStorage.getItem('username') || "";
 
-  const likes = props.myData.likes;
-  const dislikes = props.myData.dislikes;
-
-  const likeCount = likes.length;
-  const dislikeCount = dislikes.length;
-  const finalLikeCount = likeCount - dislikeCount;
-
   //console.log("AAAAAAAAAAAAAAAA\n" + currentUserUsername + "\nBBBBBBBBBBBBBBBBBBBBBBBBBB");
   console.log(props.myData._id + " " + props.myData.title);
   console.log(storedUsername);
@@ -36,13 +29,6 @@ function PostsItem(props) {
               <Card.Title>{props.myData.title}</Card.Title>
               <Card.Text>Created: {new Date(props.myData.dateCreated).toLocaleString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).replace('24', '00')}</Card.Text>
               <Card.Text>Username: {props.myData.owner}</Card.Text>
-              {/* <Button variant='secondary'>Like</Button>
-              <b style={{ paddingLeft: 10, paddingRight: 10 }}>{finalLikeCount}</b>
-              <Button variant='secondary'>Dislike</Button>
-              <br></br> */}
-
-              
-
             </Card.Body>
           </Card>
         </Link>

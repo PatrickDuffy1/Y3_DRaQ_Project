@@ -48,10 +48,10 @@ function EditComment(props)
     
         // Post the new book data to the server JSON
         axios.put('http://localhost:4000/editcomment/' + postId + '/' + commentId, newComment)
-            .then()
-            .catch();
+        .then(() => navigate('/post/' + postId))
+        .catch(() => navigate('/post/' + postId));
 
-        navigate('/post/' + postId);
+        
     };
     
 

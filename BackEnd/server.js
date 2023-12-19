@@ -36,55 +36,36 @@ async function main() {
 
 
 const commentSchema = new mongoose.Schema({
-    //_id: mongoose.Schema.Types.ObjectId,
     content: String,
     owner: String,
     edited: Boolean,
-    dateCreated: String,
-    likes: [String],
-    dislikes: [String]
+    dateCreated: String
 });
 
 const forumSchema = new mongoose.Schema({
-    // _id: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     default: mongoose.Types.ObjectId,
-    // },
     title: String,
     image: String,
     content: String,
     owner: String,
     edited: Boolean,
     dateCreated: String,
-    likes: [String],
-    dislikes: [String],
     comments: [commentSchema]
 });
 
 const accountSchema = new mongoose.Schema({
-    //_id: mongoose.Schema.Types.ObjectId,
     username: String,
     accountCreated: String,
 });
 
 const userAccountSchema = new mongoose.Schema({
-    // _id: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     default: mongoose.Types.ObjectId
-    // },
     accounts: [accountSchema],
 });
 
 const passwordSchema = new mongoose.Schema({
-    //_id: mongoose.Schema.Types.ObjectId,
     password: String
 });
 
 const userPasswordSchema = new mongoose.Schema({
-    _id: {
-        type: mongoose.Schema.Types.ObjectId,
-        default: mongoose.Types.ObjectId,
-    },
     passwords: [passwordSchema]
 });
 
@@ -145,8 +126,6 @@ app.post('/api/post', (req, res) => {
         owner: req.body.username,
         edited: false,
         dateCreated: req.body.dateCreated,
-        likes: [],
-        dislikes: [],
         comments: []
     })
         .then(() => { res.send('Book created') }) // Callback function
@@ -212,8 +191,6 @@ app.put('/api/comment/:id', async (req, res) => {
         owner: req.body.username,
         edited: false,
         dateCreated: req.body.dateCreated,
-        likes: [],
-        dislikes: []
     };
 
     try {

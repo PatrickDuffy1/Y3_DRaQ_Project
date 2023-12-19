@@ -31,10 +31,8 @@ function CreateComment()
     
         // Post the new book data to the server JSON
         axios.put('http://localhost:4000/api/comment/' + id, newComment)
-            .then()
-            .catch();
-
-        navigate('/post/' + id);
+        .then(() => navigate('/post/' + id))
+        .catch(() => navigate('/post/' + id));
     };
     
 
