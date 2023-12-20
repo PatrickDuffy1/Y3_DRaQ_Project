@@ -14,7 +14,7 @@ function Posts(props) {
             )}
 
             {props.myData.map((post) => (
-                <PostsItem myData={post} key={post._id} Reload={()=>{props.ReloadData()}}></PostsItem>
+                <PostsItem myData={post} key={post._id} Reload={() => { props.ReloadData() }}></PostsItem>
             ))}
         </div>
     );

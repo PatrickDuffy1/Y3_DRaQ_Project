@@ -2,8 +2,7 @@ import axios from "axios";
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-function EditComment(props)
-{
+function EditComment(props) {
     let { id: postId, cid: commentId } = useParams();
     const navigate = useNavigate();
 
@@ -12,7 +11,7 @@ function EditComment(props)
     const storedUsername = localStorage.getItem('username') || "";
     let dateCreated;
 
-    const[content, setContent] = useState(''); // Set book author
+    const [content, setContent] = useState(''); // Set book author
 
     //useEffect Hook is similar componentDidMount
     useEffect(() => {
@@ -31,31 +30,31 @@ function EditComment(props)
 
     const handleSubmit = (e) => {
         e.preventDefault();
-    
+
         // Get the current date and time
         const currentDate = new Date();
         dateCreated = currentDate.toISOString();
-    
+
         console.log("Content: " + content);
         console.log("Username: " + storedUsername + ", Date Created: " + dateCreated);
-    
+
         // Store book data 
         const newComment = {
             content: content,
             username: storedUsername,
             dateCreated: dateCreated,
         };
-    
+
         // Post the new book data to the server JSON
         axios.put('http://localhost:4000/editcomment/' + postId + '/' + commentId, newComment)
-        .then(() => navigate('/post/' + postId))
-        .catch(() => navigate('/post/' + postId));
+            .then(() => navigate('/post/' + postId))
+            .catch(() => navigate('/post/' + postId));
 
-        
+
     };
-    
 
-    return(
+
+    return (
         <div>
             <h3>Edit Comment</h3>
 
@@ -65,9 +64,9 @@ function EditComment(props)
                 <div className="form-group">
                     <label>Edit Comment Content: </label>
                     <input type="text"
-                    className="form-control"
-                    value={content}
-                    onChange={(e) => { setContent(e.target.value) }}
+                        className="form-control"
+                        value={content}
+                        onChange={(e) => { setContent(e.target.value) }}
                     />
                 </div>
 

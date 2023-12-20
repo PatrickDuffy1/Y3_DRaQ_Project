@@ -13,37 +13,37 @@ import CreateComment from './components/createComment';
 import EditComment from './components/editComment';
 
 function App() {
-  return (
-    <BrowserRouter>
-      <div className="App">
-        {/* Displays Nav Bar */}
-        <Navbar1></Navbar1>
+    return (
+        <BrowserRouter>
+            <div className="App">
+                {/* Displays Nav Bar */}
+                <Navbar1></Navbar1>
 
-        {/* Routes to selected page */}
-        <Routes>
-        
-          {/* Routes to Home page */}
-          <Route path='/' element={<ReadPosts></ReadPosts>}></Route>
+                {/* Routes to selected page */}
+                <Routes>
 
-          <Route path='/post/:id' element={<ReadComments></ReadComments>}></Route>
+                    {/* Routes to Home page */}
+                    <Route path='/' element={<ReadPosts></ReadPosts>}></Route>
 
-          <Route path='/signin' element={<SignIn></SignIn>}></Route>
+                    <Route path='/post/:id' element={<ReadComments></ReadComments>}></Route>
 
-          <Route path='/createaccount' element={<CreateAccount></CreateAccount>}></Route>
+                    <Route path='/signin' element={<SignIn></SignIn>}></Route>
 
-          <Route path='/createpost' element={<CreatePost></CreatePost>}></Route>
+                    <Route path='/createaccount' element={<CreateAccount></CreateAccount>}></Route>
 
-          <Route path='/edit/:id' element={<EditPost></EditPost>}></Route>
+                    <Route path='/createpost' element={<CreatePost></CreatePost>}></Route>
 
-          <Route path='/createcomment/:id' element={<CreateComment></CreateComment>}></Route>
+                    <Route path='/edit/:id' element={<EditPost></EditPost>}></Route>
 
-          <Route path='/editcomment/:id/:cid' element={<EditComment></EditComment>}></Route>
+                    <Route path='/createcomment/:id' element={<CreateComment></CreateComment>}></Route>
 
-        </Routes>
+                    <Route path='/editcomment/:id/:cid' element={<EditComment></EditComment>}></Route>
 
-      </div>
-    </BrowserRouter>
-  );
+                </Routes>
+
+            </div>
+        </BrowserRouter>
+    );
 }
 
 export default App;

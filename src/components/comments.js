@@ -14,6 +14,7 @@ function Comments(props) {
 
             {/* Display Post as card */}
             <Card style={{ width: '100%' }}>
+                <br></br>
                 <center>
                     <Card.Img variant="top" src={props.myData.image} alt={props.myData.title} style={{ width: '18rem' }} /> {/* Display post image */}
                 </center>
@@ -21,7 +22,13 @@ function Comments(props) {
                     <Card.Title>{props.myData.title}</Card.Title> {/* Display post title */}
                     <Card.Text>Created: {new Date(props.myData.dateCreated).toLocaleString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).replace('24', '00')}</Card.Text>
                     <Card.Text>
+
                         <b>Username: {props.myData.owner}</b> {/* Display post owner */}
+
+                        {props.myData.owner == storedUsername && (
+                            <b><i>- You</i></b>
+                        )}
+
                         <br></br>
                         {
                             props.myData.edited === true ? (
@@ -51,12 +58,16 @@ function Comments(props) {
             </Card>
 
             {storedUsername !== "" && (
-                <Button href={'/createcomment/'+ props.myData._id} style={{ width: '100%' }}>Create Comment</Button>
+                <Button href={'/createcomment/' + props.myData._id} style={{ width: '100%' }}>Create Comment</Button>
+            )}
+
+            {(props.myData.comments).length == 0 && (
+                <h4>There are no comments yet</h4>
             )}
 
             {/* Creates map out of comments */}
             {props.myData.comments.map((comment) => (
-                <CommentItem myData={comment} key={comment._id} postId={props.myData._id} Reload={()=>{props.ReloadData()}}></CommentItem>
+                <CommentItem myData={comment} key={comment._id} postId={props.myData._id} Reload={() => { props.ReloadData() }}></CommentItem>
             ))}
         </div>
     );

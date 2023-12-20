@@ -22,20 +22,20 @@ function ReadComments() {
         console.log("AAAAAAAAAAAAAAAAAAA\n", data.edited, "\nBBBBBBBBBBBBBBBBBBBBB");
     }, [data]);
 
-    const Reload = (e)=>{
+    const Reload = (e) => {
 
         // Asynchronously make http request to localhost:4000 (which has the book JSON) to get book data
         axios.get('http://localhost:4000/post/' + id)
-        .then( // Callback function
-            (response)=>{
-                setData(response.data) // Store books data if api call was succsessful
-            }
-        )
-        .catch( // Callback function
-            (error)=>{
-                console.log(error); // Display error message to console if api call was unsuccsessful
-            }
-        );
+            .then( // Callback function
+                (response) => {
+                    setData(response.data) // Store books data if api call was succsessful
+                }
+            )
+            .catch( // Callback function
+                (error) => {
+                    console.log(error); // Display error message to console if api call was unsuccsessful
+                }
+            );
     }
 
     // Render component based on the data

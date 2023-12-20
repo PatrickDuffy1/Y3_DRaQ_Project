@@ -1,7 +1,4 @@
-//const { FindUsername, CheckPassword, GetLoginJson } = require('./credentialManager');
-
 const mongoose = require('mongoose');
-//const { Types: { ObjectId } } = mongoose;
 
 const express = require('express')
 const app = express()
@@ -69,6 +66,7 @@ const userPasswordSchema = new mongoose.Schema({
 const forumModel = mongoose.model('draq_project_forum', forumSchema, 'draq_project_forum'); // Need to specify the collectionName, otherwise it defaults to draq_project_forums (which doesnt exist)
 const userAccountModel = mongoose.model('draq_project_usernames', userAccountSchema);
 const passwordModel = mongoose.model('draq_project_passwords', userPasswordSchema);
+//const forumModel = mongoose.model('test', forumSchema);
 
 
 // Route point that sends 'Hello World!' when passed /
@@ -328,8 +326,6 @@ app.put('/editcomment/:id/:cid', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-
-
 
 
 // Listen on the selected port

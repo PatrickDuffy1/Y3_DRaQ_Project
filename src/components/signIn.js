@@ -79,7 +79,7 @@ export default function SignIn() {
 
                 <br></br>
                 <div className="form-group">
-                    <input type="submit" value="Submit" className="btn btn-primary" />
+                    <input type="submit" value="Login" className="btn btn-primary" />
                 </div>
 
                 {error && (
@@ -104,7 +104,7 @@ export default function SignIn() {
             {debugShowAccounts == true && (
                 <div style={{ border: '1px solid black' }}>
                     <br></br>
-                Debug: This list is only for debug purposes. It is not normally visible. This list is not dynamic; it does not include any accounts created after the list was made.
+                    Debug: This list is only for debug purposes. It is not normally visible. This list is not dynamic, it does not include any accounts created after the list was made.
                     <ol>
                         <li>Username: User1, Password: dfg567</li>
                         <li>Username: User2, Password: fvbn4567</li>
