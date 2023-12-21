@@ -3,17 +3,15 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from "react-router-dom";
 
-function EditPost(props) {
+function EditPost() {
+
+    const { id } = useParams(); // Extract the 'id' parameter (object id of the post) from the URL
     const navigate = useNavigate();
 
-    let { id } = useParams();
-
-    const storedUsername = localStorage.getItem('username') || "";
-    let dateCreated;
-
-    const [title, setTitle] = useState(''); // Set book title
-    const [image, setImage] = useState(''); // Set book cover
-    const [content, setContent] = useState(''); // Set book author
+    // State variables for title, image, and content
+    const [title, setTitle] = useState('');
+    const [image, setImage] = useState('');
+    const [content, setContent] = useState('');
 
     //useEffect Hook is similar componentDidMount
     useEffect(() => {
@@ -32,62 +30,58 @@ function EditPost(props) {
             })
     }, []);
 
+    // Edit post
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log("Title: " + title + ", Image: " + image + ", Content: " + content);
-        console.log("Username: " + storedUsername + ", Date Created: " + dateCreated);
-
-        // Store book data 
+        // Store new edited post data
         const newPost = {
             title: title,
             image: image,
             content: content
         };
 
-        // Put the new book data to the server JSON
+        // Put the edited post data to the server JSON
         axios.put('http://localhost:4000/api/post/' + id, newPost)
-            .then()
-            .catch();
-
-        navigate('/');
+            .then(navigate('/')) // Go to the home page
+            .catch(navigate('/')); // Go to the home page
     };
 
-
+    // Render the component
     return (
         <div>
             <h3>Edit Post</h3>
 
-            {/* Form for adding new book */}
+            {/* Form for editing post */}
             <form onSubmit={handleSubmit}>
 
-                {/* Input for adding book title */}
+                {/* Input for the post title */}
                 <div className="form-group">
                     <label>Edit Post Title: </label>
                     <input type="text"
                         className="form-control"
-                        value={title} // Sets value of input box to title
-                        onChange={(e) => { setTitle(e.target.value) }} // Update title when value in input box changed
+                        value={title} // Sets value of input box to the inputted image
+                        onChange={(e) => { setTitle(e.target.value) }} // Update title when the value in input box changes
                     />
                 </div>
 
-                {/* Input for adding book cover */}
+                {/* Input for the post image */}
                 <div className="form-group">
-                    <label>Edit Post Image: </label>
+                    <label>Edit Post Image (Leave blank for no image): </label>
                     <input type="text"
                         className="form-control"
-                        value={image} // Sets value of input box to cover
-                        onChange={(e) => { setImage(e.target.value) }} // Update cover when value in input box changed
+                        value={image} // Sets value of input box to the inputted image
+                        onChange={(e) => { setImage(e.target.value) }} // Update image when the value in input box changes
                     />
                 </div>
 
-                {/* Input for adding book author */}
+                {/* Input for the post content */}
                 <div className="form-group">
                     <label>Edit Post Content: </label>
                     <input type="text"
                         className="form-control"
-                        value={content} // Sets value of input box to author
-                        onChange={(e) => { setContent(e.target.value) }} // Update author when value in input box changed
+                        value={content} /// Sets value of input box to the inputted content
+                        onChange={(e) => { setContent(e.target.value) }} // Update content when the value in input box changes
                     />
                 </div>
 

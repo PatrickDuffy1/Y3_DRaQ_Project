@@ -4,31 +4,34 @@ import axios from "axios";
 import { useParams } from 'react-router-dom';
 
 function ReadComments() {
-    const { id } = useParams();
+    const { id } = useParams(); // Extract the 'id' parameter (object id of the selected post) from the URL
+
+    // State to hold the post data
     const [data, setData] = useState([]);
 
+    // React hook
     useEffect(() => {
-        axios.get('http://localhost:4000/post/' + id)
-            .then((response) => {
-                console.log(response.data);
-                setData(response.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, [id]);
 
-    useEffect(() => {
-        console.log("AAAAAAAAAAAAAAAAAAA\n", data.edited, "\nBBBBBBBBBBBBBBBBBBBBB");
-    }, [data]);
-
-    const Reload = (e) => {
-
-        // Asynchronously make http request to localhost:4000 (which has the book JSON) to get book data
+        // Asynchronously make http request to localhost:4000/post/:id  to get the data for the post with the object id
         axios.get('http://localhost:4000/post/' + id)
             .then( // Callback function
                 (response) => {
-                    setData(response.data) // Store books data if api call was succsessful
+                    setData(response.data); // Store post data if api call was succsessful
+                })
+            .catch( // Callback function
+                (error) => {
+                    console.log(error); // Display error message to console if api call was unsuccsessful
+                });
+    }, []);
+
+    // Automatically reload the component
+    const Reload = (e) => {
+
+        // Asynchronously make http request to localhost:4000/post/:id  to get the data for the post with the object id
+        axios.get('http://localhost:4000/post/' + id)
+            .then( // Callback function
+                (response) => { // Callback function
+                    setData(response.data) /// Store post data if api call was succsessful
                 }
             )
             .catch( // Callback function
@@ -41,8 +44,9 @@ function ReadComments() {
     // Render component based on the data
     return (
         <div>
-            {/* Check if data.comments is defined before rendering */}
-            {data.comments && (
+            {data.comments && ( // Check if data.comments is defined before rendering
+
+                // Pass the comment data and ReloadData function to Comments for each of the posts
                 <Comments myData={data} ReloadData={Reload}></Comments>
             )}
         </div>

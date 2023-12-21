@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar1 from './components/navbar';
@@ -22,22 +21,29 @@ function App() {
                 {/* Routes to selected page */}
                 <Routes>
 
-                    {/* Routes to Home page */}
+                    {/* Routes to readPosts page */}
                     <Route path='/' element={<ReadPosts></ReadPosts>}></Route>
 
+                    {/* Routes to readComments page */}
                     <Route path='/post/:id' element={<ReadComments></ReadComments>}></Route>
 
+                    {/* Routes to signIn page */}
                     <Route path='/signin' element={<SignIn></SignIn>}></Route>
 
+                    {/* Routes to createAccount page */}
                     <Route path='/createaccount' element={<CreateAccount></CreateAccount>}></Route>
 
+                    {/* Routes to createpost page */}
                     <Route path='/createpost' element={<CreatePost></CreatePost>}></Route>
 
+                    {/* Routes to editPost page */}
                     <Route path='/edit/:id' element={<EditPost></EditPost>}></Route>
 
+                    {/* Routes to createComment page */}
                     <Route path='/createcomment/:id' element={<CreateComment></CreateComment>}></Route>
 
-                    <Route path='/editcomment/:id/:cid' element={<EditComment></EditComment>}></Route>
+                    {/* Routes to editComment page */}
+                    <Route path='/api/editcomment/:id/:cid' element={<EditComment></EditComment>}></Route>
 
                 </Routes>
 

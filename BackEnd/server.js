@@ -20,15 +20,17 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
+// Call the asynchronous main function to establish a connection to the MongoDB database, and handle any potential errors by logging them to the console.
 main().catch(err => console.log(err));
 
+// Establish MongoDB connection
 async function main() {
 
     await mongoose.connect('mongodb+srv://adminadmin:adminadmin@cluster0.g7sn3k5.mongodb.net/MyDatabase?retryWrites=true&w=majority');
 }
 
-
+// Schemas for MongoDB collections
+// The schema of the comments array (which is in the forum collection)
 const commentSchema = new mongoose.Schema({
     content: String,
     owner: String,
@@ -36,6 +38,7 @@ const commentSchema = new mongoose.Schema({
     dateCreated: String
 });
 
+// The schema of the forum collection
 const forumSchema = new mongoose.Schema({
     title: String,
     image: String,
@@ -43,87 +46,81 @@ const forumSchema = new mongoose.Schema({
     owner: String,
     edited: Boolean,
     dateCreated: String,
-    comments: [commentSchema]
+    comments: [commentSchema] // Use comment schema as array type
 });
 
+// The schema of the accounts array (which is in the account collection)
 const accountSchema = new mongoose.Schema({
     username: String,
     accountCreated: String,
 });
 
+// The schema of the accounts collection
 const userAccountSchema = new mongoose.Schema({
     accounts: [accountSchema],
 });
 
+// The schema of the passwords array (which is in the passwords collection)
 const passwordSchema = new mongoose.Schema({
     password: String
 });
 
+// The schema of the passwords collection
 const userPasswordSchema = new mongoose.Schema({
     passwords: [passwordSchema]
 });
 
-const forumModel = mongoose.model('draq_project_forum', forumSchema, 'draq_project_forum'); // Need to specify the collectionName, otherwise it defaults to draq_project_forums (which doesnt exist)
+// Models created from schemas
+// Need to specify the collection name for draq_project_forum, otherwise it defaults to draq_project_forums (which doesn't exist)
+const forumModel = mongoose.model('draq_project_forum', forumSchema, 'draq_project_forum');
 const userAccountModel = mongoose.model('draq_project_usernames', userAccountSchema);
 const passwordModel = mongoose.model('draq_project_passwords', userPasswordSchema);
-//const forumModel = mongoose.model('test', forumSchema);
 
 
-// Route point that sends 'Hello World!' when passed /
+// Route point that sends all of the documents in the forum collection when passed /
 app.get('/', async (req, res) => {
-    // res.send(data)
 
-    const posts = await forumModel.find();
+    const posts = await forumModel.find(); // Finds all documents in the forum collection
+
     res.json(posts);
-    //console.log(posts); 
 });
 
+// Route point that sends a specific post document from the forum collection based on an object id
 app.get('/post/:id', async (req, res) => {
-    const postId = req.params.id;
 
-    const post = await forumModel.findOne({ "_id": postId });
-
-    //const extractedPost = post.posts[0];
+    const postId = req.params.id; // Set postId equal to the id in the url
+    const post = await forumModel.findOne({ "_id": postId }); // Finds a specific post document from the forum based on an object id
 
     res.json(post);
-
-    //res.send(data);
 });
 
-
+// Route point for signing into account
 app.post('/signin', async (req, res) => {
 
-    let loginResult;
+    let loginResult = await CheckCredentials(req.body.username, req.body.password); // Check if the username exists and if the password is correct
 
-    loginResult = await CheckCredentials(req.body.username, req.body.password);
-    //}
-
-    let validationStatus = await GetLoginJson(loginResult);
-
-
-    //console.log(loginResult);
-    console.log(validationStatus);
-    //console.log("BBBBBBBBBBBBBBBB");
-    res.send(validationStatus);
-    //console.log("CCCCCCCCCCCCCCCCCC");
+    res.json(await GetLoginJson(loginResult)); // Post the result of the login attempt as JSON
 })
 
+// Route point for creating new account
 app.post('/createaccount', async (req, res) => {
 
-    let usernameStatus = 0;
-    let passwordStatus = false;
+    let usernameStatus = 0; // Creates usernameStatus and sets it to 0 (0 is invalid - username is not at least one character in length)
+    let passwordStatus = false; // Creates passwordStatus and sets it to false (false is invalid - password is not at least one character in length)
 
-    if ((req.body.username).length > 0) {
+    if ((req.body.username).length > 0) { // Checks if the username is at least one character in length
 
-        if ((await getUsernameId(req.body.username)) == "") {
-            usernameStatus = 2;
+        if ((await getUsernameId(req.body.username)) == "") { // Checks if the username already exists
+            usernameStatus = 2; // Sets usernameStatus to 2 (valid new username)
 
-            if ((req.body.password).length > 0) {
-                passwordStatus = true;
+            if ((req.body.password).length > 0) { // Checks if the password is at least one character long
+                passwordStatus = true; // Sets passwordStatus to true (valid new password)
 
+                // Gets the current date and time
                 const currentDate = new Date();
                 let dateCreated = currentDate.toISOString();
 
+                // Adds the new username and the date/time to the array of usernames in the accounts collection
                 await userAccountModel.updateOne(
                     {},
                     {
@@ -136,10 +133,9 @@ app.post('/createaccount', async (req, res) => {
                     }
                 );
 
-                //console.log(updatedUser);
+                userId = await getUsernameId(req.body.username); // Gets the object id of the newly created username
 
-                userId = await getUsernameId(req.body.username);
-
+                // Adds the new password to the array of passwords in the passwords collection and gives it the same object id as the username
                 await passwordModel.updateOne(
                     {},
                     {
@@ -154,10 +150,11 @@ app.post('/createaccount', async (req, res) => {
             }
         }
         else {
-            usernameStatus = 1;
+            usernameStatus = 1; // Sets usernameStatus to 2 (invalid - username already exists)
         }
     }
 
+    // Creates a json object with the result of the validation on the new username and password
     let validNewAccountJson = [
         {
             "usernameStatus": usernameStatus,
@@ -165,166 +162,130 @@ app.post('/createaccount', async (req, res) => {
         }
     ];
 
-    res.send(validNewAccountJson);
+    res.send(validNewAccountJson); // Post the result of the account creation attempt as JSON
 })
 
+// Route point for creating new post
 app.post('/api/post', (req, res) => {
-    //console.log(req.body);
 
+    // Gets the current date and time
+    const currentDate = new Date();
+    let dateCreated = currentDate.toISOString();
+
+    // Adds a new post document to the forum collection
     forumModel.create({
         title: req.body.title,
         image: req.body.image,
         content: req.body.content,
         owner: req.body.username,
-        edited: false,
-        dateCreated: req.body.dateCreated,
+        edited: false, // Set edited to false when a post is first created
+        dateCreated: dateCreated,
         comments: []
     })
-        .then(() => { res.send('Book created') }) // Callback function
-        .catch(() => { res.send('Book NOT created') }); // Callback function
+        .then(() => { res.send('Post created') }) // Callback function
+        .catch(() => { res.send('Post NOT created') }); // Callback function
 });
 
+// Route point that deletes a specific post document from the forum collection based on an object id
 app.delete('/api/post/:id', async (req, res) => {
 
-    console.log("Delete: " + req.params.id);
-
-    let post = await forumModel.findByIdAndDelete(req.params.id); // Find book by id and delete it from the database
-    res.send(post); // Will not ecxecute unitl book has been deleted
+    const post = await forumModel.findByIdAndDelete(req.params.id); // Find a specific post by its object id and delete it from the collection
+    res.send(post); // Will not excecute until the post has been deleted
 })
 
-// Find book by id and update it based on the values the user submitted
+// Route point that finds post by it oject id and updates it based on the values the user submitted
 app.put('/api/post/:id', async (req, res) => {
-    console.log("Update: " + req.params.id);
-    console.log("AAAAAAAAAAAAAAAAAAAA");
 
     // Create a new object with only the attributes to be updated
     const updateObject = {
         title: req.body.title,
         image: req.body.image,
         content: req.body.content,
-        edited: true
+        edited: true // Set edited to true when a post has been edited
     };
 
-    // Use the new object in the findByIdAndUpdate method
-    let post = await forumModel.findByIdAndUpdate(req.params.id, updateObject, { new: true });
-    console.log("BBBBBBBBBBBBBBBBBB");
+    // Update the post withe the attributes in the new object
+    const post = await forumModel.findByIdAndUpdate(req.params.id, updateObject, { new: true });
     res.send(post);
 });
 
+// Route point that sends a specific comment based on its object id and its posts object id
 app.get('/api/comment/:id/:cid', async (req, res) => {
-    console.log("Find: " + req.params.id);
 
-    try {
-        const post = await forumModel.findOne(
-            { _id: req.params.id, 'comments._id': req.params.cid },
-            { 'comments.$': 1 }
-        );
+    // Get a specific comment based on its object id and the posts object id
+    const post = await forumModel.findOne(
+        { _id: req.params.id, 'comments._id': req.params.cid },
+        { 'comments.$': 1 }
+    );
 
-        if (!post) {
-            return res.status(404).send('Comment not found');
-        }
+    const comment = post.comments[0]; // Get the comment from the comments array
+    res.json(comment);
 
-        const comment = post.comments[0];
-        console.log("Comment found:", comment);
-        res.status(200).json(comment);
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Internal Server Error');
-    }
 });
 
-
+// Route point that adds a comment to a post's comments array based on the post's object id
 app.put('/api/comment/:id', async (req, res) => {
-    console.log("Update: " + req.params.id);
 
+    // Gets the current date and time
+    const currentDate = new Date();
+    let dateCreated = currentDate.toISOString();
+
+    // Create a new object with the new comments attributes
     const newComment = {
         title: req.body.title,
         content: req.body.content,
         owner: req.body.username,
-        edited: false,
-        dateCreated: req.body.dateCreated,
+        edited: false, // Set edited to false when a comment is first created
+        dateCreated: dateCreated
     };
 
-    try {
-        // Use the async/await syntax for better error handling
-        const post = await forumModel.findById(req.params.id);
+    // Use findByIdAndUpdate to add the new comment to the comments array
+    const post = await forumModel.findByIdAndUpdate(
+        req.params.id,
+        { $push: { comments: newComment } },
+        { new: true }
+    );
 
-        if (!post) {
-            // Return an error response if the post is not found
-            return res.status(404).json({ error: 'Post not found' });
-        }
-
-        // Push the new comment to the comments array
-        post.comments.push(newComment);
-
-        // Save the updated post
-        await post.save();
-
-        // Send the updated post as a response
-        res.json(post);
-    } catch (err) {
-        console.error(err);
-        // Handle other errors and send an appropriate response
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
+    res.json(post);
 });
 
+// Route point that deletes a specific comment from a post's comments array based on the post's object id and the comments object id
 app.delete('/api/comment/:id/:cid', async (req, res) => {
 
-    console.log("Delete: " + req.params.id);
+    // Use findByIdAndUpdate to delete the specified comment from the comments array
+    const updatedDocument = await forumModel.findOneAndUpdate(
+        { _id: req.params.id },
+        { $pull: { comments: { _id: req.params.cid } } },
+        { new: true }
+    );
 
-    try {
-        const updatedDocument = await forumModel.findOneAndUpdate(
-            { _id: req.params.id },
-            { $pull: { comments: { _id: req.params.cid } } },
-            { new: true }
-        );
-        console.log("Comment deleted successfully:", updatedDocument);
-        res.status(200).json(updatedDocument);
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Internal Server Error');
-    }
+    res.json(updatedDocument);
 
-    //res.send(post); // Will not ecxecute unitl book has been deleted
 })
 
-app.put('/editcomment/:id/:cid', async (req, res) => {
-    console.log("Update: " + req.params.id);
+// Route point that edits a specific comment in a post's comments array based on the post's object id and the comments object id
+app.put('/api/editcomment/:id/:cid', async (req, res) => {
 
+    // Create a new object with only the attributes to be updated
     const updatedComment = {
         content: req.body.content,
-        edited: true,
-        dateCreated: req.body.dateCreated,
+        edited: true, // Set edited to true when a comment has been edited
     };
 
-    try {
-        const post = await forumModel.findById(req.params.id);
+    const post = await forumModel.findById(req.params.id); // Get the post based on its object id
 
-        if (!post) {
-            return res.status(404).json({ error: 'Post not found' });
-        }
+    // Find the index of the comment in the comments array of the post
+    const commentIndex = post.comments.findIndex(comment => comment._id.toString() === req.params.cid);
 
-        // Find the index of the comment in the array
-        const commentIndex = post.comments.findIndex(comment => comment._id.toString() === req.params.cid);
+    // Merge using Object.assign()
+    // https://www.javascripttutorial.net/es6/javascript-object-assign/
+    const updatedPost = post.toObject();
+    const updatedCommentObject = Object.assign({}, updatedPost.comments[commentIndex], updatedComment);
+    updatedPost.comments[commentIndex] = updatedCommentObject; // Put updated object back in comments array
 
-        if (commentIndex === -1) {
-            return res.status(404).json({ error: 'Comment not found' });
-        }
+    await forumModel.findByIdAndUpdate(req.params.id, updatedPost, { new: true }); // Update the collection with the updated post
 
-        // Merge existing comment with updated values
-        const updatedPost = post.toObject(); // Convert to plain object to avoid modifying the Mongoose document directly
-        updatedPost.comments[commentIndex] = { ...updatedPost.comments[commentIndex], ...updatedComment };
-
-        // Save the updated post
-        await forumModel.findByIdAndUpdate(req.params.id, updatedPost, { new: true });
-
-        // Send the updated post as a response
-        res.json(updatedPost);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
+    res.json(updatedPost);
 });
 
 
@@ -333,41 +294,46 @@ app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
 
+// Return the result of the username and password validation checks
 async function CheckCredentials(username, password) {
 
-    let userObjectId = await getUsernameId(username);
-    let passwordObjectId = await getPasswordId(password);
+    let userObjectId = await getUsernameId(username); // Get the object id of the username (empty string if username does not exist)
 
-    if (userObjectId != "") {
+    if (userObjectId != "") { // Check if the username exists
 
-        if (passwordObjectId != "") {
+        let passwordObjectId = await getPasswordId(password); // Get the object id of the password (empty string if password does not exist)
 
-            if (userObjectId == passwordObjectId) {
-                return 2;
+        if (passwordObjectId != "") { // Check if the password exists
+
+            if (userObjectId == passwordObjectId) { // Check if the object ids of the username and password match
+                return 2; // Return 2 (Valid login)
             }
         }
 
-        return 1;
+        return 1; // Return 1 (Invalid login - Valid username, incorrect password)
     }
 
-    return 0;
+    return 0; // Return 0 (Invalid login - Invalid username)
 }
 
-
+// Return a json object with the results of the login attempt
 async function GetLoginJson(loginResult) {
-    //console.log("AAAAAAAA");
 
+    // Set both to false - (Invalid Username, incorrect password)
     let validUsername = false;
     let correctPassword = false;
 
-    if (loginResult > 0) {
+    if (loginResult > 0) { // Set validUsername to true - (Valid Username, incorrect password)
         validUsername = true;
     }
 
-    if (loginResult == 2) {
+    if (loginResult == 2) { // Set correctPassword to true - (Valid Username, Correct password)
         correctPassword = true;
     }
 
+    // Note: Will never have a situation where validUsername is false and validPassword is true - (Invalid Username, Correct password)
+
+    // Create a json object with the results of the login attempt
     let validLoginJson = [
         {
             "validUsername": validUsername,
@@ -378,27 +344,37 @@ async function GetLoginJson(loginResult) {
     return validLoginJson;
 }
 
+// Returns object id of username, returns "" if username does not exist
 async function getUsernameId(username) {
+
+    // Search for username 
     const userObject = await userAccountModel.findOne({ 'accounts.username': username }, { '_id': 1, 'accounts.$': 1 });
 
-    if (userObject) {
-        let userObjectId = userObject.accounts[0]._id;
-        userObjectId = userObjectId.toString();
+    if (userObject) { // Check if username was found
 
-        return userObjectId;
+        let userObjectId = userObject.accounts[0]._id; // Get the object id from the accounts array
+        userObjectId = userObjectId.toString(); // Convert the object id to a string
+
+        return userObjectId; // Return the object id of the username as a String
     }
-    return "";
+
+    return ""; // Return "" if the username does not exist
 }
 
+// Returns object id of password, returns "" if password does not exist
 async function getPasswordId(password) {
+
+    // Search for password
     const passwordObject = await passwordModel.findOne({ 'passwords.password': password }, { '_id': 1, 'passwords.$': 1 });
 
-    if (passwordObject) {
-        let passwordObjectId = passwordObject.passwords[0]._id;
-        passwordObjectId = passwordObjectId.toString();
+    if (passwordObject) { // Check if password was found
 
-        return passwordObjectId;
+        let passwordObjectId = passwordObject.passwords[0]._id; // Get the object id from the passwords array
+        passwordObjectId = passwordObjectId.toString(); // Convert the object id to a string
+
+        return passwordObjectId; // Return the object id of the password as a String
     }
-    return "";
+
+    return ""; // Return "" if the password does not exist
 }
 
